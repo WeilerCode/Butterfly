@@ -15,7 +15,10 @@ class ButterflyServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        echo "This is test";
+        $this->publishes([
+            __DIR__.'/Config/butterfly.php' => config_path('butterfly.php'),
+        ]);
+        $this->loadRoutesFrom(__DIR__.'/routes.php');
     }
 
     public function register()

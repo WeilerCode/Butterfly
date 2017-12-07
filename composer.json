@@ -14,12 +14,5 @@
         "psr-4": {
             "Weiler\\Butterfly\\": "src/"
         }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Weiler\\Butterfly\\Providers\\ButterflyServiceProvider"
-            ]
-        }
     }
 }
