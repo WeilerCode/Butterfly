@@ -9,5 +9,17 @@
             "email": "weiler.china@gmail.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Weiler\\Butterfly\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Weiler\\Butterfly\\Providers\\ButterflyServiceProvider"
+            ]
+        }
+    }
 }
