@@ -10,6 +10,11 @@
 Route::get('/', function () {
     echo 'Home';
 });
-Route::get('admin', function () {
-    return view('butterfly::admin.index');
+//Admin
+Route::group(['namespace' => 'Weiler\Butterfly\Http\Controllers\Admin','prefix' => 'admin'],function()
+{
+    Route::group([],function()
+    {
+        Route::get('/', ['uses'=>'IndexController@index']);
+    });
 });
