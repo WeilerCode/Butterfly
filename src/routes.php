@@ -10,6 +10,6 @@
 Route::get('/', function () {
     echo 'Home';
 });
-Route::get('test', function () {
-    echo "Hello Word!";
+Route::get('admin', function () {
+    return view('butterfly::admin.index');
 });

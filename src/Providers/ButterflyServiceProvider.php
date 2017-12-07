@@ -22,6 +22,7 @@ class ButterflyServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../Assets' => public_path('vendor/butterfly'),
         ], 'public');
+        $this->loadViewsFrom(__DIR__.'/../Views', 'butterfly');
     }
 
     public function register()
