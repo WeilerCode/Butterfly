@@ -1,0 +1,13 @@
+{
+    "name": "weiler/butterfly",
+    "description": "manage",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Weiler",
+            "email": "weiler.china@gmail.com"
+        }
+    ],
+    "require": {}
+}
