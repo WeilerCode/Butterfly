@@ -1,5 +1,9 @@
 @extends('butterfly::admin.layout.admin')
 
 @section('content')
-    <h1>Hello Word!</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <p>占位符</p>
+        </div>
+    </div>
 @endsection
