@@ -7,3 +7,11 @@
  * Time: 14:32
  */
 
+return [
+    'providers' => [
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => Weiler\Butterfly\Models\User::class
+        ]
+    ]
+];

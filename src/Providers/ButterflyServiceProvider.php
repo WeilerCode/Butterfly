@@ -27,6 +27,10 @@ class ButterflyServiceProvider extends ServiceProvider
 
     public function register()
     {
-
+        $this->app->singleton(
+            \Illuminate\Contracts\Http\Kernel::class,
+            \Weiler\Butterfly\Http\Kernel::class
+        );
+        $this->app['config']['auth.providers'] = config('butterfly.providers');
     }
 }
