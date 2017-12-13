@@ -14,6 +14,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'butterfly.admin.guest' => \Weiler\Butterfly\Http\Middleware\AdminAuthGuest::class
+        'butterfly.admin.guest' => \Weiler\Butterfly\Http\Middleware\AdminAuthGuest::class,
+        'butterfly.admin.auth'  =>  \Weiler\Butterfly\Http\Middleware\AdminAuth::class
     ];
 }

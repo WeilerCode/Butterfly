@@ -4,10 +4,10 @@ namespace Weiler\Butterfly\Http\Controllers\Admin;
 
 use Weiler\Butterfly\Http\Controllers\AdminController;
 
-class IndexController extends AdminController
+class MeController extends AdminController
 {
     public function index()
     {
-        return view('butterfly::admin.index');
+        return view('butterfly::admin.me');
     }
 }
