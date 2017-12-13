@@ -27,9 +27,9 @@ class ButterflyServiceProvider extends ServiceProvider
         ], 'public');
         // Views
         $this->loadViewsFrom(__DIR__.'/../Views', 'butterfly');
-        $this->publishes([
-            __DIR__.'/../Views' => resource_path('views/vendor/butterfly'),
-        ]);
+//        $this->publishes([
+//            __DIR__.'/../Views' => resource_path('views/vendor/butterfly'),
+//        ]);
         // Translations
         $this->loadTranslationsFrom(__DIR__.'/../Lang/Butterfly', 'butterfly');
         $this->publishes([

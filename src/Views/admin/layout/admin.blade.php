@@ -10,11 +10,14 @@
     <link rel="stylesheet" href="{{ asset('vendor/butterfly/plugins/bootstrap/css/bootstrap.min.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('vendor/butterfly/plugins/font-awesome/css/font-awesome.min.css') }}">
+    @yield('css-plugins')
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('vendor/butterfly/admin/AdminLTE/css/AdminLTE.min.css') }}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ asset('vendor/butterfly/admin/AdminLTE/css/skins/skin-green.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/butterfly/admin/css/main.css') }}">
+    @yield('css')
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -256,7 +259,7 @@
 
                                 <p>
                                     {{ $USER->realName }}
-                                    <small>{{ $A_GROUP[$USER->groupID]->name }}</small>
+                                    <small>{{ $A_GROUP[$USER->groupID]['name'] }}</small>
                                 </p>
                             </li>
                             <!-- Menu Footer-->
@@ -285,7 +288,7 @@
                 </div>
                 <div class="pull-left info">
                     <p>{{ $USER->realName }}</p>
-                    <small>{{ $A_GROUP[$USER->groupID]->name }}</small>
+                    <small>{{ $A_GROUP[$USER->groupID]['name'] }}</small>
                 </div>
             </div>
             <!-- search form -->
@@ -316,7 +319,11 @@
                                     <ul>
                                         @foreach($S_MENU[$f['id']] as $s)
                                             @if($s['display'] === 1)
-                                                <li @if(isset($s['active']) && $s['active'] == 1) class="active" @endif><a href="{{ $s['url'] }}"><i class="fa fa-circle-o"></i> {{ __('butterfly::'.$f['name']) }}</a></li>
+                                                @if(isset($s['active']) && $s['active'] == 1)
+                                                    <li class="active"><a href="javascript:void(0);"><i class="fa fa-circle-o"></i> {{ __('butterfly::'.$f['name']) }}</a></li>
+                                                @else
+                                                    <li><a href="{{ $s['url'] }}"><i class="fa fa-circle-o"></i> {{ __('butterfly::'.$f['name']) }}</a></li>
+                                                @endif
                                             @endif
                                         @endforeach
                                     </ul>
@@ -325,11 +332,19 @@
                         @endif
                     @else
                         @if($f['display'] === 1)
-                            <li @if(isset($f['active']) && $f['active'] == 1) class="active" @endif>
-                                <a href="{{ $f['url'] }}">
-                                    <i class="{{ $f['icon'] }}"></i> <span>{{ __('butterfly::'.$f['name']) }}</span>
-                                </a>
-                            </li>
+                            @if(isset($f['active']) && $f['active'] == 1)
+                                <li class="active">
+                                    <a href="javascript:void(0);">
+                                        <i class="{{ $f['icon'] }}"></i> <span>{{ __('butterfly::'.$f['name']) }}</span>
+                                    </a>
+                                </li>
+                            @else
+                                <li>
+                                    <a href="{{ $f['url'] }}">
+                                        <i class="{{ $f['icon'] }}"></i> <span>{{ __('butterfly::'.$f['name']) }}</span>
+                                    </a>
+                                </li>
+                            @endif
                         @endif
                     @endif
                 @endforeach
@@ -382,7 +397,9 @@
 <script src="{{ asset('vendor/butterfly/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
 <!-- FastClick -->
 <script src="{{ asset('vendor/butterfly/plugins/fastclick/lib/fastclick.js') }}"></script>
+@yield('js-plugins')
 <!-- AdminLTE App -->
 <script src="{{ asset('vendor/butterfly/admin/AdminLTE/js/adminlte.min.js') }}"></script>
+@yield('js')
 </body>
 </html>
