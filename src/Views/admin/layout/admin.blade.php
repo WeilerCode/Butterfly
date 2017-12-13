@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Butterfly | Dashboard</title>
+    <title>Butterfly | {{ __('butterfly::'.last($B_MENU)['name']) }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -307,7 +307,7 @@
                         @if($F->display === 1)
                             <li class="treeview @if(isset($f['active']) && $f['active'] == 1) active @endif">
                                 <a href="javascript:void(0);">
-                                    <i class="{{ $f['icon'] }}"></i> <span>{{ $f['name'] }}</span>
+                                    <i class="{{ $f['icon'] }}"></i> <span>{{ __('butterfly::'.$f['name']) }}</span>
                                     <span class="pull-right-container">
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </span>
@@ -316,7 +316,7 @@
                                     <ul>
                                         @foreach($S_MENU[$f['id']] as $s)
                                             @if($s['display'] === 1)
-                                                <li @if(isset($s['active']) && $s['active'] == 1) class="active" @endif><a href="{{ $s['url'] }}"><i class="fa fa-circle-o"></i> {{ $s['name'] }}</a></li>
+                                                <li @if(isset($s['active']) && $s['active'] == 1) class="active" @endif><a href="{{ $s['url'] }}"><i class="fa fa-circle-o"></i> {{ __('butterfly::'.$f['name']) }}</a></li>
                                             @endif
                                         @endforeach
                                     </ul>
@@ -327,7 +327,7 @@
                         @if($f['display'] === 1)
                             <li @if(isset($f['active']) && $f['active'] == 1) class="active" @endif>
                                 <a href="{{ $f['url'] }}">
-                                    <i class="{{ $f['icon'] }}"></i> <span>{{ $f['name'] }}</span>
+                                    <i class="{{ $f['icon'] }}"></i> <span>{{ __('butterfly::'.$f['name']) }}</span>
                                 </a>
                             </li>
                         @endif
@@ -341,17 +341,17 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <section class="content-header">
-            <h1><i class="{{ head($B_MENU)['icon'] }}"></i> {{ last($B_MENU)['name'] }}</h1>
+            <h1><i class="{{ head($B_MENU)['icon'] }}"></i> {{ __('butterfly::'.last($B_MENU)['name']) }}</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
                 @foreach($B_MENU as $v)
                     @if(isset($v['current']))
                         <li class="active">
-                            {{ $v['name'] }}
+                            {{ __('butterfly::'.$v['name']) }}
                         </li>
                     @else
                         <li>
-                            <a href="@if(!empty($v['routeName'])){{ route($v['routeName']) }}@else # @endif">{{ $v['name'] }}</a>
+                            <a href="@if(!empty($v['routeName'])){{ route($v['routeName']) }}@else # @endif">{{ __('butterfly::'.$v['name']) }}</a>
                         </li>
                     @endif
                 @endforeach
