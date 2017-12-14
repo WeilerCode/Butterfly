@@ -15,6 +15,7 @@ class ButterflyServiceProvider extends ServiceProvider
 {
     public function boot()
     {
+        include_once __DIR__.'/../Functions/Base.php';
         $this->publishes([
             __DIR__.'/../Config/butterfly.php' => config_path('butterfly.php'),
         ]);
@@ -25,19 +26,21 @@ class ButterflyServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../Assets' => public_path('vendor/butterfly'),
         ], 'public');
-        // Views
+        // Views & Translations
         $this->loadViewsFrom(__DIR__.'/../Views', 'butterfly');
-//        $this->publishes([
-//            __DIR__.'/../Views' => resource_path('views/vendor/butterfly'),
-//        ]);
-        // Translations
         $this->loadTranslationsFrom(__DIR__.'/../Lang/Butterfly', 'butterfly');
-        $this->publishes([
-            // laravel translation
-            __DIR__.'/../Lang/Laravel' => resource_path('lang'),
-            // butterfly translation
-            __DIR__.'/../Lang/Butterfly' => resource_path('lang/vendor/butterfly'),
-        ]);
+        if (!config('app.debug'))
+        {
+            $this->publishes([
+                __DIR__.'/../Views' => resource_path('views/vendor/butterfly'),
+            ]);
+            $this->publishes([
+                // laravel translation
+                __DIR__.'/../Lang/Laravel' => resource_path('lang'),
+                // butterfly translation
+                __DIR__.'/../Lang/Butterfly' => resource_path('lang/vendor/butterfly'),
+            ]);
+        }
     }
 
     public function register()

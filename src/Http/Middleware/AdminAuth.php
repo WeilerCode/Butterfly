@@ -162,7 +162,7 @@ class AdminAuth
         foreach ($F_MENU as $v) {
             $S_MENU[$v['id']] = [];
             foreach ($this->menu as $m) {
-                if ($m['parentID'] == $v['id'] && $m->display == 1) {
+                if ($m['parentID'] == $v['id'] && $m['display'] == 1) {
                     $m['url'] = empty($m['routeName']) ? '' : route($m['routeName']);
                     array_push($S_MENU[$v['id']], $m);
                 }
