@@ -9,7 +9,9 @@
             "email": "weiler.china@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "weiler/upload-img": "^1.0"
+    },
     "autoload": {
         "psr-4": {
             "Weiler\\Butterfly\\": "src/"

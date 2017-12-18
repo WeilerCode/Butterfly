@@ -2,3 +2,17 @@
 .profile-user-img {
     padding: 0px;
 }
+
+/* toastr */
+.toast-info {
+    background-color: #00c0ef;
+}
+.toast-success {
+    background-color: #00a65a;
+}
+.toast-error {
+    background-color: #dd4b39;
+}
+.toast-warning {
+    background-color: #f39c12;
+}

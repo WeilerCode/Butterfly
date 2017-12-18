@@ -27,6 +27,7 @@ Route::group(['namespace' => 'Weiler\Butterfly\Http\Controllers', 'middleware' =
             Route::group(['prefix' => 'me'], function () {
                 Route::get('/', ['uses'=>'MeController@index'])->name('admin-me');
                 Route::post('update', ['uses'=>'MeController@update'])->name('admin-me-update');
+                Route::post('upload-img', ['uses'=>'MeController@uploadImg'])->name('admin-me-uploadImg');
             });
         });
     });

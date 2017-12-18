@@ -8,6 +8,7 @@
  */
 
 return [
+    // app
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
@@ -20,5 +21,13 @@ return [
         'admin_group'   =>  'butterfly_admin_group',
         //后台目录列表html
         'admin_menu'    =>  'butterfly_admin_menu'
+    ],
+    // Upload
+    'upload'        =>  [
+        'member_path'                =>  'uploads/member/',
+        'update_path'                =>  'uploads/images/',
+
+        'member_default'             =>  'member.png',
+        'picture_default'            =>  ''
     ]
 ];

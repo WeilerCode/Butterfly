@@ -400,6 +400,7 @@
 @yield('js-plugins')
 <!-- AdminLTE App -->
 <script src="{{ asset('vendor/butterfly/admin/AdminLTE/js/adminlte.min.js') }}"></script>
+<script src="{{ asset('vendor/butterfly/admin/js/main.js') }}"></script>
 @yield('js')
 </body>
 </html>

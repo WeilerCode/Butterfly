@@ -5,6 +5,7 @@ namespace Weiler\Butterfly\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Weiler\Butterfly\Http\Controllers\AdminController;
 use Weiler\Butterfly\Models\User;
+use Weiler\UploadImg\UploadImg;
 
 class MeController extends AdminController
 {
@@ -41,5 +42,50 @@ class MeController extends AdminController
             return butterflyAdminJump('success', __('butterfly::Tips.updateSuccess'), '', 1);
         }
         return butterflyAdminJump('error', __('butterfly::Tips.updateFail'), '', 1);
+    }
+
+    /**
+     * 上传图片
+     * @param UploadImg $uploadImg
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function uploadImg(UploadImg $uploadImg, Request $request)
+    {
+        if ($request->hasFile('cropperFile'))
+        {
+            if ($request->file('cropperFile')->isValid())
+            {
+                $avatar_file = $request->file('cropperFile');
+                $avatar_data = $request->input('cropperData');
+                $avatar_data_obj = json_decode(stripslashes($avatar_data));
+                $uploadImg->savePath = config('butterfly.upload.member_path').$request->user()->id.'/';
+                //横纵比例
+                $prefix = md5(time());
+                $aspectRatio = [
+                    [
+                        'width'     =>  $avatar_data_obj->width,
+                        'height'    =>  $avatar_data_obj->height,
+                        'path'      =>  $prefix.'.png'
+                    ]
+                ];
+                $backData = $uploadImg->upThumb($avatar_file, $avatar_data, $aspectRatio);
+                if(count($backData) > 0)
+                {
+                    $origin = User::where('id', $request->user()->id)->first();
+                    //更新数据
+                    $check = User::where('id', $request->user()->id)->update(['thumb' => $backData['data']['path']]);
+                    if($check)
+                    {
+                        $backData['msg'] = '更新成功';
+                    }else{
+                        $backData['msg'] = '更新失败';
+                    }
+                    $backData['data']['path'] = asset($backData['data']['path']);
+                    //返回数据
+                    return response()->json($backData);
+                }
+            }
+        }
     }
 }

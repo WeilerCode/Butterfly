@@ -1,13 +1,30 @@
 @extends('butterfly::admin.layout.admin')
 
+@section('css-plugins')
+    <link rel="stylesheet" href="{{ asset('vendor/butterfly/plugins/toastr/toastr.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/butterfly/plugins/cropper/cropper.min.css') }}">
+@endsection
+
+@section('js-plugins')
+    <script src="{{ asset('vendor/butterfly/plugins/toastr/toastr.min.js') }}"></script>
+    <script src="{{ asset('vendor/butterfly/plugins/cropper/cropper.min.js') }}"></script>
+@endsection
+
+@section('css')
+    <link rel="stylesheet" href="{{ asset('vendor/butterfly/admin/css/cropper.css') }}">
+@endsection
+
+@section('js')
+    <script src="{{ asset('vendor/butterfly/admin/js/cropper.js') }}"></script>
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-md-4">
             <!-- Profile Image -->
             <div class="box box-success">
                 <div class="box-body box-profile">
-                    <img class="profile-user-img img-responsive" src="{{ asset('vendor/butterfly/admin/AdminLTE/img/user2-160x160.jpg') }}" alt="User profile picture">
-
+                    <img id="imgShow" class="profile-user-img img-responsive butterfly-cropper-click" src="{{ asset('vendor/butterfly/admin/AdminLTE/img/user2-160x160.jpg') }}" data-toggle="tooltip" data-original-title="点击更换头像">
                     <h3 class="profile-username text-center">{{ $USER->realName }}</h3>
 
                     <p class="text-muted text-center">{{ $A_GROUP[$USER->groupID]['name'] }}</p>
@@ -147,4 +164,54 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="butterfly-cropper-modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form action="{{ route('admin-me-uploadImg') }}" class="butterfly-cropper-form" enctype="multipart/form-data" method="post">
+                    {!! csrf_field() !!}
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">图片上传</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="hidden" id="aspectRatioWidth" value="1">
+                                <input type="hidden" id="aspectRatioHeight" value="1">
+                                <input type="hidden" class="butterfly-cropper-data" name="cropperData">
+                                <label class="btn btn-success btn-upload" for="inputImage" title="选择文件">
+                                    <input type="file" class="butterfly-cropper-file" id="inputImage" name="cropperFile" >
+                                    <span class="docs-tooltip">
+                                    <span class="fa fa-image"></span>
+                                </span>
+                                </label>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary butterfly-cropper-event" data-method="move" title="移动">
+                                        <span class="fa fa-arrows"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-primary butterfly-cropper-event" data-method="crop" title="裁剪">
+                                        <span class="fa fa-crop"></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="butterfly-cropper-canvas"></div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="butterfly-cropper-thumb-canvas abb"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-success"><span class="fa fa-upload"></span> 上传</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
 @endsection
