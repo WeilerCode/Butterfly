@@ -8,10 +8,15 @@
  */
 
 return [
-    // app
-    'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
+    // route name
+    'route_name'    =>  [
+        'admin'     =>  'admin',
+        'img'       =>  'img'
+    ],
+    // auth
+    'providers'     => [
+        'users'     => [
+            'driver'=> 'eloquent',
             'model' => Weiler\Butterfly\Models\User::class
         ]
     ],
@@ -26,7 +31,6 @@ return [
     'upload'        =>  [
         'member_path'                =>  'uploads/member/',
         'update_path'                =>  'uploads/images/',
-
         'member_default'             =>  'member.png',
         'picture_default'            =>  ''
     ]

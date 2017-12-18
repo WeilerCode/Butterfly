@@ -11,16 +11,25 @@ Route::group(['namespace' => 'Weiler\Butterfly\Http\Controllers', 'middleware' =
     Route::get('/', function (\Illuminate\Http\Request $request) {
         dd($request->route()->action);
     })->name('hhh');
-    //Admin
-    Route::group(['namespace' => 'Admin','prefix' => 'admin'], function()
+
+    // Img
+    Route::group(['prefix' => config('butterfly.route_name.img')], function()
     {
-        //Auth
+        // $uid, $sourceName, $size = null
+        Route::get('member', 'ImgController@getMember')->name('img-member');
+        Route::get('picture', 'ImgController@getPicture')->name('img-picture');
+    });
+
+    // Admin
+    Route::group(['namespace' => 'Admin','prefix' => config('butterfly.route_name.admin')], function()
+    {
+        // Auth
         Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function () {
             Route::get('login', 'AuthController@showLoginForm');
             Route::post('login', 'AuthController@login');
             Route::get('logout', 'AuthController@logout');
         });
-        //Can
+        // Can
         Route::group(['middleware' => ['butterfly.admin.auth']], function()
         {
             Route::get('/', ['uses'=>'IndexController@index'])->name('admin-index');

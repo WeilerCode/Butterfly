@@ -24,7 +24,7 @@
             <!-- Profile Image -->
             <div class="box box-success">
                 <div class="box-body box-profile">
-                    <img id="imgShow" class="profile-user-img img-responsive butterfly-cropper-click" src="{{ asset('vendor/butterfly/admin/AdminLTE/img/user2-160x160.jpg') }}" data-toggle="tooltip" data-original-title="点击更换头像">
+                    <img id="imgShow" class="profile-user-img img-responsive butterfly-cropper-click" src="{{ route('img-member', ['uid' => $USER->id, 'sourceName' => $USER->thumb, 'size' => '100x100']) }}" data-toggle="tooltip" data-original-title="点击更换头像">
                     <h3 class="profile-username text-center">{{ $USER->realName }}</h3>
 
                     <p class="text-muted text-center">{{ $A_GROUP[$USER->groupID]['name'] }}</p>

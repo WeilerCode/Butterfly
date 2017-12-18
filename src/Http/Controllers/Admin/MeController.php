@@ -74,7 +74,7 @@ class MeController extends AdminController
                 {
                     $origin = User::where('id', $request->user()->id)->first();
                     //更新数据
-                    $check = User::where('id', $request->user()->id)->update(['thumb' => $backData['data']['path']]);
+                    $check = User::where('id', $request->user()->id)->update(['thumb' => $backData['data']['name']]);
                     if($check)
                     {
                         $backData['msg'] = '更新成功';
