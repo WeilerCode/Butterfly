@@ -32,11 +32,19 @@ Route::group(['namespace' => 'Weiler\Butterfly\Http\Controllers', 'middleware' =
         // Can
         Route::group(['middleware' => ['butterfly.admin.auth']], function()
         {
+            // 首页
             Route::get('/', ['uses'=>'IndexController@index'])->name('admin-index');
+            // 我的面板
             Route::group(['prefix' => 'me'], function () {
                 Route::get('/', ['uses'=>'MeController@index'])->name('admin-me');
                 Route::post('update', ['uses'=>'MeController@update'])->name('admin-me-update');
                 Route::post('upload-img', ['uses'=>'MeController@uploadImg'])->name('admin-me-uploadImg');
+            });
+            //后台管理
+            Route::group(['namespace' => 'Manage', 'prefix' => 'manage'], function () {
+                Route::group(['prefix' => 'menu'], function () {
+                    Route::get('/', ['uses' => 'MenuController@index'])->name('admin-manage-menu');
+                });
             });
         });
     });

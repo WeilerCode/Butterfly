@@ -57,8 +57,7 @@ class ImgController extends Controller
         $this->openFile($sourcePath);                                       //载入文件流
         // 判断是否存在文件，不存在则使用默认图片
         if (!$this->imageSize || !$this->fileOpen) {
-            $defaultImg = $this->memberPath . $this->memberDefault;
-            $this->openFile($defaultImg);                                   //将默认图片加入到文件流
+            $this->openFile($this->memberDefault);                                   //将默认图片加入到文件流
         }
 
         // 获取缩略图
@@ -95,8 +94,7 @@ class ImgController extends Controller
         $this->openFile($sourcePath);                                   //载入文件流
         // 判断是否存在文件，不存在则使用默认图片
         if (!$this->imageSize || !$this->fileOpen) {
-            $defaultImg = $this->updatePath.$this->pictureDefault;
-            $this->openFile($defaultImg);                          //将默认图片加入到文件流
+            $this->openFile($this->pictureDefault);                     //将默认图片加入到文件流
         }
 
         // 获取缩略图

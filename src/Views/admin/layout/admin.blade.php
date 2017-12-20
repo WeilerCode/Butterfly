@@ -308,7 +308,7 @@
                 <li class="header">主导航</li>
                 @foreach($F_MENU as $f)
                     @if(!empty($S_MENU[$f['id']]))
-                        @if($F->display === 1)
+                        @if($f['display'] === 1)
                             <li class="treeview @if(isset($f['active']) && $f['active'] == 1) active @endif">
                                 <a href="javascript:void(0);">
                                     <i class="{{ $f['icon'] }}"></i> <span>{{ __('butterfly::'.$f['name']) }}</span>
@@ -317,13 +317,13 @@
                                     </span>
                                 </a>
                                 @if(!empty($S_MENU[$f['id']]))
-                                    <ul>
+                                    <ul class="treeview-menu">
                                         @foreach($S_MENU[$f['id']] as $s)
                                             @if($s['display'] === 1)
                                                 @if(isset($s['active']) && $s['active'] == 1)
-                                                    <li class="active"><a href="javascript:void(0);"><i class="fa fa-circle-o"></i> {{ __('butterfly::'.$f['name']) }}</a></li>
+                                                    <li class="active"><a href="javascript:void(0);"><i class="fa fa-circle-o"></i> {{ __('butterfly::'.$s['name']) }}</a></li>
                                                 @else
-                                                    <li><a href="{{ $s['url'] }}"><i class="fa fa-circle-o"></i> {{ __('butterfly::'.$f['name']) }}</a></li>
+                                                    <li><a href="{{ $s['url'] }}"><i class="fa fa-circle-o"></i> {{ __('butterfly::'.$s['name']) }}</a></li>
                                                 @endif
                                             @endif
                                         @endforeach

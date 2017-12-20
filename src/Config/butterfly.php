@@ -31,7 +31,7 @@ return [
     'upload'        =>  [
         'member_path'                =>  'uploads/member/',
         'update_path'                =>  'uploads/images/',
-        'member_default'             =>  'member.png',
+        'member_default'             =>  'vendor/butterfly/public/member.png',
         'picture_default'            =>  ''
     ]
 ];

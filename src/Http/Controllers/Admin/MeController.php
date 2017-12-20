@@ -72,7 +72,6 @@ class MeController extends AdminController
                 $backData = $uploadImg->upThumb($avatar_file, $avatar_data, $aspectRatio);
                 if(count($backData) > 0)
                 {
-                    $origin = User::where('id', $request->user()->id)->first();
                     //更新数据
                     $check = User::where('id', $request->user()->id)->update(['thumb' => $backData['data']['name']]);
                     if($check)
