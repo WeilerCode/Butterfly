@@ -1,12 +1,10 @@
 @extends('butterfly::admin.layout.admin')
 
 @section('css-plugins')
-    <link rel="stylesheet" href="{{ asset('vendor/butterfly/plugins/toastr/toastr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/butterfly/plugins/cropper/cropper.min.css') }}">
 @endsection
 
 @section('js-plugins')
-    <script src="{{ asset('vendor/butterfly/plugins/toastr/toastr.min.js') }}"></script>
     <script src="{{ asset('vendor/butterfly/plugins/cropper/cropper.min.js') }}"></script>
 @endsection
 

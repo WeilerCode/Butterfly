@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('vendor/butterfly/plugins/bootstrap/css/bootstrap.min.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('vendor/butterfly/plugins/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/butterfly/plugins/toastr/toastr.min.css') }}">
     @yield('css-plugins')
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('vendor/butterfly/admin/AdminLTE/css/AdminLTE.min.css') }}">
@@ -397,6 +398,7 @@
 <script src="{{ asset('vendor/butterfly/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
 <!-- FastClick -->
 <script src="{{ asset('vendor/butterfly/plugins/fastclick/lib/fastclick.js') }}"></script>
+<script src="{{ asset('vendor/butterfly/plugins/toastr/toastr.min.js') }}"></script>
 @yield('js-plugins')
 <!-- AdminLTE App -->
 <script src="{{ asset('vendor/butterfly/admin/AdminLTE/js/adminlte.min.js') }}"></script>
