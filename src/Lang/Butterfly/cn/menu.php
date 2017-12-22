@@ -15,8 +15,8 @@ return [
     //我的面板
     'me'                        =>      [
         'index'                 =>      '我的面板',
-        'upload'                =>      '上传头像',
-        'edit'                  =>      '修改资料'
+        'upload'                =>      '上传头像(POST)',
+        'edit'                  =>      '修改资料(POST)'
     ],
 
     //用户管理
@@ -44,9 +44,11 @@ return [
         'menu'                  =>      [
             'index'             =>      '目录管理',
             'add'               =>      '添加目录',
+            'add-post'          =>      '添加目录(POST)',
             'edit'              =>      '修改目录',
+            'edit-post'         =>      '修改目录(POST)',
             'del'               =>      '删除目录',
-            'display'           =>      '是否显示(Ajax)'
+            'display'           =>      '是否显示(POST)'
         ],
         'adminMember'           =>      [
             'index'             =>      '用户管理',
