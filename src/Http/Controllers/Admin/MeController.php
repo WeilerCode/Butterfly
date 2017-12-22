@@ -39,9 +39,9 @@ class MeController extends AdminController
             $request->except('_token', 'password_confirmation') :
             $request->except('_token', 'password', 'password_confirmation')
         )) {
-            return butterflyAdminJump('success', __('butterfly::Tips.updateSuccess'), '', 1);
+            return butterflyAdminJump('success', getLang('Tips.updateSuccess'), '', 1);
         }
-        return butterflyAdminJump('error', __('butterfly::Tips.updateFail'), '', 1);
+        return butterflyAdminJump('error', getLang('Tips.updateFail'), '', 1);
     }
 
     /**

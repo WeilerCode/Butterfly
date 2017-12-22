@@ -9,7 +9,7 @@
 //WEB
 Route::group(['namespace' => 'Weiler\Butterfly\Http\Controllers', 'middleware' => ['web']], function () {
     Route::get('/', function (\Illuminate\Http\Request $request) {
-        dd($request->route()->action);
+        dd(getLang('butterfly::Tips.createSuccess'));
     })->name('hhh');
 
     // Img
@@ -44,11 +44,12 @@ Route::group(['namespace' => 'Weiler\Butterfly\Http\Controllers', 'middleware' =
             Route::group(['namespace' => 'Manage', 'prefix' => 'manage'], function () {
                 Route::group(['prefix' => 'menu'], function () {
                     Route::get('/', ['uses' => 'MenuController@index'])->name('admin-manage-menu');
-                    Route::get('add', ['uses' => 'MenuController@getAdd'])->name('admin-manage-menu-add');
+                    Route::get('add/{parentID?}', ['uses' => 'MenuController@getAdd'])->name('admin-manage-menu-add');
                     Route::post('add-post', ['uses' => 'MenuController@postAdd'])->name('admin-manage-menu-add-post');
-                    Route::get('edit', ['uses' => 'MenuController@getEdit'])->name('admin-manage-menu-edit');
-                    Route::post('edit-post', ['uses' => 'MenuController@postEdit'])->name('admin-manage-menu-edit-post');
-                    Route::get('del', ['uses' => 'MenuController@getDel'])->name('admin-manage-menu-del');
+                    Route::get('edit/{id?}', ['uses' => 'MenuController@getEdit'])->name('admin-manage-menu-edit');
+                    Route::post('edit-post/{id?}', ['uses' => 'MenuController@postEdit'])->name('admin-manage-menu-edit-post');
+                    Route::get('del/{id?}', ['uses' => 'MenuController@getDel'])->name('admin-manage-menu-del');
+                    Route::post('display', ['uses' => 'MenuController@display'])->name('admin-manage-menu-display');
                 });
             });
         });

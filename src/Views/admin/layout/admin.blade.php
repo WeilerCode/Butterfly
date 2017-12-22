@@ -3,9 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Butterfly | {{ __('butterfly::'.last($B_MENU)['name']) }}</title>
+    <title>Butterfly | {{ getLang(last($B_MENU)['name']) }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    {{-- CSRF --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="{{ asset('vendor/butterfly/plugins/bootstrap/css/bootstrap.min.css') }}">
     <!-- Font Awesome -->
@@ -311,7 +313,7 @@
                         @if($f['display'] === 1)
                             <li class="treeview @if(isset($f['active']) && $f['active'] == 1) active @endif">
                                 <a href="javascript:void(0);">
-                                    <i class="{{ $f['icon'] }}"></i> <span>{{ __('butterfly::'.$f['name']) }}</span>
+                                    <i class="{{ $f['icon'] }}"></i> <span>{{ getLang($f['name']) }}</span>
                                     <span class="pull-right-container">
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </span>
@@ -320,10 +322,10 @@
                                     <ul class="treeview-menu">
                                         @foreach($S_MENU[$f['id']] as $s)
                                             @if($s['display'] === 1)
-                                                @if(isset($s['active']) && $s['active'] == 1)
-                                                    <li class="active"><a href="javascript:void(0);"><i class="fa fa-circle-o"></i> {{ __('butterfly::'.$s['name']) }}</a></li>
+                                                @if(isset($s['active']) && $s['active'] == 1 && isset($s['current']))
+                                                    <li class="active"><a href="javascript:void(0);"><i class="fa fa-circle-o"></i> {{ getLang($s['name']) }}</a></li>
                                                 @else
-                                                    <li><a href="{{ $s['url'] }}"><i class="fa fa-circle-o"></i> {{ __('butterfly::'.$s['name']) }}</a></li>
+                                                    <li><a href="{{ $s['url'] }}"><i class="fa fa-circle-o"></i> {{ getLang($s['name']) }}</a></li>
                                                 @endif
                                             @endif
                                         @endforeach
@@ -336,13 +338,13 @@
                             @if(isset($f['active']) && $f['active'] == 1)
                                 <li class="active">
                                     <a href="javascript:void(0);">
-                                        <i class="{{ $f['icon'] }}"></i> <span>{{ __('butterfly::'.$f['name']) }}</span>
+                                        <i class="{{ $f['icon'] }}"></i> <span>{{ getLang($f['name']) }}</span>
                                     </a>
                                 </li>
                             @else
                                 <li>
                                     <a href="{{ $f['url'] }}">
-                                        <i class="{{ $f['icon'] }}"></i> <span>{{ __('butterfly::'.$f['name']) }}</span>
+                                        <i class="{{ $f['icon'] }}"></i> <span>{{ getLang($f['name']) }}</span>
                                     </a>
                                 </li>
                             @endif
@@ -357,17 +359,17 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <section class="content-header">
-            <h1><i class="{{ head($B_MENU)['icon'] }}"></i> {{ __('butterfly::'.last($B_MENU)['name']) }}</h1>
+            <h1><i class="{{ head($B_MENU)['icon'] }}"></i> {{ getLang(last($B_MENU)['name']) }}</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
                 @foreach($B_MENU as $v)
                     @if(isset($v['current']))
                         <li class="active">
-                            {{ __('butterfly::'.$v['name']) }}
+                            {{ getLang($v['name']) }}
                         </li>
                     @else
                         <li>
-                            <a href="@if(!empty($v['routeName'])){{ route($v['routeName']) }}@else # @endif">{{ __('butterfly::'.$v['name']) }}</a>
+                            <a href="@if(!empty($v['routeName'])){{ route($v['routeName']) }}@else # @endif">{{ getLang($v['name']) }}</a>
                         </li>
                     @endif
                 @endforeach
@@ -399,6 +401,7 @@
 <!-- FastClick -->
 <script src="{{ asset('vendor/butterfly/plugins/fastclick/lib/fastclick.js') }}"></script>
 <script src="{{ asset('vendor/butterfly/plugins/toastr/toastr.min.js') }}"></script>
+<script src="{{ asset('vendor/butterfly/plugins/bootbox/bootbox.min.js') }}"></script>
 @yield('js-plugins')
 <!-- AdminLTE App -->
 <script src="{{ asset('vendor/butterfly/admin/AdminLTE/js/adminlte.min.js') }}"></script>

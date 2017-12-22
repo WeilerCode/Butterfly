@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * 获取本地化语言
+ * @param $key
+ * @param string $namespace 模块命名
+ * @return mixed
+ */
+function getLang($key, $namespace = 'butterfly')
+{
+    return Lang::has($key) ? Lang::get($key) : (Lang::has($namespace.'::'.$key) ? Lang::get($namespace.'::'.$key) : $key);
+}
 
 /**
  * 根据模板返回表单验证的单条错误信息
@@ -39,6 +49,6 @@ function butterflyAdminJump($type='success', $msg='', $url=null, $seconds=3)
             break;
     }
     $jump = 'butterfly::admin.prompt.jump-'.$title;
-    $title = __('butterfly::Tips.'.$title);
+    $title = getLang('Tips.'.$title);
     return view($jump)->with(['jumpMsg' => $msg,'jumpUrl' => $url,'jumpSeconds' => $seconds,'title' => $title]);
 }

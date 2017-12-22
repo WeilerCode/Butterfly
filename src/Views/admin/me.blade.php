@@ -166,7 +166,6 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <form action="{{ route('admin-me-uploadImg') }}" class="butterfly-cropper-form" enctype="multipart/form-data" method="post">
-                    {!! csrf_field() !!}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
