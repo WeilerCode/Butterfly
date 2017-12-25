@@ -322,10 +322,10 @@
                                     <ul class="treeview-menu">
                                         @foreach($S_MENU[$f['id']] as $s)
                                             @if($s['display'] === 1)
-                                                @if(isset($s['active']) && $s['active'] == 1 && isset($s['current']))
-                                                    <li class="active"><a href="javascript:void(0);"><i class="fa fa-circle-o"></i> {{ getLang($s['name']) }}</a></li>
+                                                @if(isset($s['current']))
+                                                    <li @if(isset($s['active']) && $s['active'] == 1) class="active" @endif><a href="javascript:void(0);"><i class="fa fa-circle-o"></i> {{ getLang($s['name']) }}</a></li>
                                                 @else
-                                                    <li><a href="{{ $s['url'] }}"><i class="fa fa-circle-o"></i> {{ getLang($s['name']) }}</a></li>
+                                                    <li @if(isset($s['active']) && $s['active'] == 1) class="active" @endif><a href="{{ $s['url'] }}"><i class="fa fa-circle-o"></i> {{ getLang($s['name']) }}</a></li>
                                                 @endif
                                             @endif
                                         @endforeach
