@@ -40,16 +40,28 @@ Route::group(['namespace' => 'Weiler\Butterfly\Http\Controllers', 'middleware' =
                 Route::post('update', ['uses'=>'MeController@update'])->name('admin-me-update');
                 Route::post('upload-img', ['uses'=>'MeController@uploadImg'])->name('admin-me-uploadImg');
             });
-            //后台管理
+            // 后台管理
             Route::group(['namespace' => 'Manage', 'prefix' => 'manage'], function () {
+                // 目录管理
                 Route::group(['prefix' => 'menu'], function () {
                     Route::get('/', ['uses' => 'MenuController@index'])->name('admin-manage-menu');
                     Route::get('add/{parentID?}', ['uses' => 'MenuController@getAdd'])->name('admin-manage-menu-add');
                     Route::post('add-post', ['uses' => 'MenuController@postAdd'])->name('admin-manage-menu-add-post');
-                    Route::get('edit/{id?}', ['uses' => 'MenuController@getEdit'])->name('admin-manage-menu-edit');
-                    Route::post('edit-post/{id?}', ['uses' => 'MenuController@postEdit'])->name('admin-manage-menu-edit-post');
-                    Route::get('del/{id?}', ['uses' => 'MenuController@getDel'])->name('admin-manage-menu-del');
+                    Route::get('edit/{id}', ['uses' => 'MenuController@getEdit'])->name('admin-manage-menu-edit');
+                    Route::post('edit-post/{id}', ['uses' => 'MenuController@postEdit'])->name('admin-manage-menu-edit-post');
+                    Route::get('del/{id}', ['uses' => 'MenuController@getDel'])->name('admin-manage-menu-del');
                     Route::post('display', ['uses' => 'MenuController@display'])->name('admin-manage-menu-display');
+                });
+                // 目录管理
+                Route::group(['prefix' => 'permissions'], function () {
+                    Route::get('/', ['uses' => 'PermissionsController@index'])->name('admin-manage-permissions');
+                    Route::get('add-group', ['uses' => 'PermissionsController@getAddGroup'])->name('admin-manage-permissions-add-group');
+                    Route::post('add-group-post', ['uses' => 'PermissionsController@postAddGroup'])->name('admin-manage-permissions-add-group-post');
+                    Route::get('edit-group/{id}', ['uses' => 'PermissionsController@getEditGroup'])->name('admin-manage-permissions-edit-group');
+                    Route::post('edit-group-post/{id}', ['uses' => 'PermissionsController@postEditGroup'])->name('admin-manage-permissions-edit-group-post');
+                    Route::get('del-group/{id}', ['uses' => 'PermissionsController@getDelGroup'])->name('admin-manage-permissions-del-group');
+                    Route::get('permissions/{groupID}', ['uses' => 'PermissionsController@getPermissions'])->name('admin-manage-permissions-permissions');
+                    Route::post('permissions-post/{groupID}', ['uses' => 'PermissionsController@postPermissions'])->name('admin-manage-permissions-permissions-post');
                 });
             });
         });

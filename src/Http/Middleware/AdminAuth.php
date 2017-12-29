@@ -45,6 +45,8 @@ class AdminAuth
             {
                 // 设置后台视图的局部变量
                 $this->setViewShare();
+                // 添加权限目录到request
+                $request->attributes->add(['menus' => $this->menu]);
                 return $next($request);
             }else{
                 //return ShowMsg('error','你没有权限访问此页面！','');

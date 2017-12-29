@@ -66,7 +66,9 @@
     <div class="row">
         <div class="col-md-4" id="leftMove">
             <div class="box box-success">
-                <div class="box-header">{{ getLang(last($B_MENU)['name']) }}</div>
+                <div class="box-header with-border">
+                    <a href="{{ route('admin-manage-menu') }}" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> {{ getLang('Tips.rollBack') }}</a>
+                </div>
                 <div class="box-body">
                     <form role="form" action="{{ route('admin-manage-menu-edit-post', ['id' => $thisMenu->id]) }}" method="post">
                         {{ csrf_field() }}
@@ -103,7 +105,7 @@
                             <input type="text" name="icon" value="{{ old('icon') ? old('icon') : $thisMenu->icon }}" id="ico" class="form-control" placeholder="{{ getLang('fieldsMenu.iconHelp') }}">
                             <p class="help-block">{{ getLang('fieldsMenu.iconHelp2') }}</p>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">提交</button>
+                        <button type="submit" class="btn btn-success btn-block">提交</button>
                     </form>
                 </div>
                 <!-- /.box-body -->

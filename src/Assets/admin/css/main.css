@@ -16,3 +16,16 @@
 .toast-warning {
     background-color: #f39c12;
 }
+
+/* bootstrap-switch */
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-success, .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-success {
+    background: #00a65a;
+}
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-danger, .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-danger {
+    background: #dd4b39;
+}
+
+/* other */
+.asterisk {
+    color: #E9573F;
+}

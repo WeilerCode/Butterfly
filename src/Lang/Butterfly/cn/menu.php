@@ -50,29 +50,15 @@ return [
             'del'               =>      '删除目录',
             'display'           =>      '是否显示(POST)'
         ],
-        'adminMember'           =>      [
-            'index'             =>      '用户管理',
-            'add'               =>      '添加用户',
-            'edit'              =>      '修改用户',
-            'del'               =>      '删除用户',
-            'upload'            =>      '上传头像',
-        ],
-        'adminGroup'            =>      [
-            'index'             =>      '分组权限',
-            'add'               =>      '添加分组',
-            'edit'              =>      '修改分组',
-            'del'               =>      '删除分组',
-            'groupPermissions'  =>      '管理员权限'
-        ],
-        'adminSet'              =>      [
-            'index'             =>      '后台设置',
-            'add'               =>      '添加',
-            'edit'              =>      '修改',
-            'del'               =>      '删除'
-        ],
-        'adminLog'              =>      [
-            'index'             =>      '后台日志',
-            'show'              =>      '查看日志'
+        'permissions'           =>      [
+            'index'             =>      '权限管理',
+            'add-group'         =>      '添加分组',
+            'add-group-post'    =>      '添加分组(POST)',
+            'edit-group'        =>      '修改分组',
+            'edit-group-post'   =>      '修改分组(POST)',
+            'del-group'         =>      '删除分组',
+            'permissions'       =>      '权限设置',
+            'permissions-post'  =>      '权限设置(POST)'
         ]
     ]
 ];

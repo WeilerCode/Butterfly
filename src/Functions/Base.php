@@ -13,8 +13,8 @@ function getLang($key, $namespace = 'butterfly')
 
 /**
  * 根据模板返回表单验证的单条错误信息
- * @param $errors 表单验证信息对象
- * @param $name 当前验证字段
+ * @param $errors \Illuminate\Support\Facades\Validator 表单验证信息对象
+ * @param $name string 当前验证字段
  * @return string
  */
 function getValidationErrorForTemplate($errors, $name)
