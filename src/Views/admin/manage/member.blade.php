@@ -55,6 +55,9 @@
                     </table>
                 </div>
                 <!-- /.box-body -->
+                <div class="box-footer">
+                    {{ $members->links('butterfly::admin.pagination.default') }}
+                </div>
             </div>
             <!-- /.box -->
 
