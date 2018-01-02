@@ -59,6 +59,14 @@ return [
             'del-group'         =>      '删除分组',
             'permissions'       =>      '权限设置',
             'permissions-post'  =>      '权限设置(POST)'
+        ],
+        'member'                =>      [
+            'index'             =>      '后台用户',
+            'add'               =>      '添加用户',
+            'add-post'          =>      '添加用户(POST)',
+            'edit'              =>      '修改用户',
+            'edit-post'         =>      '修改用户(POST)',
+            'del'               =>      '删除用户'
         ]
     ]
 ];

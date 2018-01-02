@@ -63,6 +63,15 @@ Route::group(['namespace' => 'Weiler\Butterfly\Http\Controllers', 'middleware' =
                     Route::get('permissions/{groupID}', ['uses' => 'PermissionsController@getPermissions'])->name('admin-manage-permissions-permissions');
                     Route::post('permissions-post/{groupID}', ['uses' => 'PermissionsController@postPermissions'])->name('admin-manage-permissions-permissions-post');
                 });
+                // 后台用户管理
+                Route::group(['prefix' => 'member'], function() {
+                    Route::get('/', ['uses' => 'MemberController@index'])->name('admin-manage-member');
+                    Route::get('add', ['uses' => 'MemberController@getAdd'])->name('admin-manage-member-add');
+                    Route::post('add-post', ['uses' => 'MemberController@postAdd'])->name('admin-manage-member-add-post');
+                    Route::get('edit/{id}', ['uses' => 'MemberController@getEdit'])->name('admin-manage-member-edit');
+                    Route::post('edit-post/{id?}', ['uses' => 'MemberController@postEdit'])->name('admin-manage-member-edit-post');
+                    Route::get('del/{id}', ['uses' => 'MemberController@getDel'])->name('admin-manage-member-del');
+                });
             });
         });
     });
