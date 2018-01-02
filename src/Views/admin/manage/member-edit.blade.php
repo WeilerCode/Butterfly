@@ -47,8 +47,8 @@
                             {!! $error !!}
                         </div>
                         <div class="form-group @if($error = getValidationErrorForTemplate($errors, 'name')){{ 'has-error' }}@endif">
-                            <label>{{ getLang('fieldsAdminMember.username') }} <span class="asterisk">*</span></label>
-                            <input type="text" class="form-control" name="name" value="{{ old('name') ? old('name') : $member->name }}" placeholder="{{ getLang('fieldsAdminMember.usernameHelp') }}">
+                            <label>{{ getLang('fieldsAdminMember.username') }}</label>
+                            <input type="text" class="form-control" disabled value="{{ old('name') ? old('name') : $member->name }}" placeholder="{{ getLang('fieldsAdminMember.usernameHelp') }}">
                             {!! $error !!}
                         </div>
                         <div class="form-group @if($error = getValidationErrorForTemplate($errors, 'realName')){{ 'has-error' }}@endif">
@@ -67,12 +67,12 @@
                             {!! $error !!}
                         </div>
                         <div class="form-group @if($error = getValidationErrorForTemplate($errors, 'password')){{ 'has-error' }}@endif">
-                            <label>{{ getLang('fieldsAdminMember.password') }} <span class="asterisk">*</span></label>
-                            <input type="password" class="form-control" name="password" value="" placeholder="">
+                            <label>{{ getLang('fieldsAdminMember.password') }}</label>
+                            <input type="password" class="form-control" name="password" value="" placeholder="不修改密码时请不要填写">
                             {!! $error !!}
                         </div>
                         <div class="form-group">
-                            <label>{{ getLang('fieldsAdminMember.password2') }} <span class="asterisk">*</span></label>
+                            <label>{{ getLang('fieldsAdminMember.password2') }}</label>
                             <input type="password" class="form-control" name="password_confirmation" value="" placeholder="">
                         </div>
                         <button class="btn btn-success btn-sm btn-block" type="submit"><i class="fa fa-check"></i>&nbsp;{{ getLang('Tips.submit') }}</button>

@@ -86,7 +86,40 @@ class MemberController extends AdminController
         return view('butterfly::admin.manage.member-edit')->with(['group' => $group, 'member' => $member]);
     }
     public function postEdit($id, Request $request)
-    {}
+    {
+        // 验证条件
+        $rule = [
+            'groupID'       =>  'required',
+            'name'          =>  'required|unique:butterfly_users,name,'.$id,
+        ];
+        if ($request->input('email'))
+            $rule['email'] = 'email|max:255|unique:butterfly_users,email,'.$id;
+        if ($request->input('password'))
+            $rule['password'] = 'required|confirmed|min:6';
+        // 表单验证
+        $validator = $this->validator($request->input(), $rule);
+        if ($validator)
+            return redirect()->back()->withErrors($validator)->withInput();
+
+        // 获取group
+        $group = UserAdminGroup::all()->keyBy('id');
+        // 组织数据
+        $data = [
+            'lv'        =>  $group[$request->input('groupID')]->lv,
+            'realName'  =>  $request->input('realName') ? $request->input('realName') : '',
+            'email'     =>  $request->input('email') ? $request->input('email') : '',
+            'phone'     =>  $request->input('phone') ? $request->input('phone') : '',
+            'groupID'   =>  $request->input('groupID'),
+            'password'  =>  bcrypt($request->input('password'))
+        ];
+        // 判断是否修改password
+        if ($request->input('password'))
+            $data['password'] = $request->input('password');
+        if (isset($group[$request->input('groupID')]) && User::where('id', $id)->update($data)) {
+            return butterflyAdminJump('success', getLang('Tips.updateSuccess'), route('admin-manage-member-edit', ['id' => $id]), 1);
+        }
+        return butterflyAdminJump('error', getLang('Tips.updateFail'), route('admin-manage-member-edit', ['id' => $id]), 1);
+    }
 
     public function getDel($id)
     {}
