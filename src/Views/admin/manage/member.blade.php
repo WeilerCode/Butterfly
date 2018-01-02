@@ -55,9 +55,11 @@
                     </table>
                 </div>
                 <!-- /.box-body -->
+                @if($members->hasPages())
                 <div class="box-footer">
                     {{ $members->links('butterfly::admin.pagination.default') }}
                 </div>
+                @endif
             </div>
             <!-- /.box -->
 
