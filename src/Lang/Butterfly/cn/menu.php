@@ -66,7 +66,8 @@ return [
             'add-post'          =>      '添加用户(POST)',
             'edit'              =>      '修改用户',
             'edit-post'         =>      '修改用户(POST)',
-            'del'               =>      '删除用户'
+            'del'               =>      '删除用户',
+            'upload'            =>      '上传头像(POST)',
         ]
     ]
 ];

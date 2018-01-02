@@ -22,4 +22,16 @@ class AdminController extends Controller
         }
         return false;
     }
+    /**
+     * 验证是否越级操作
+     * @param $lv
+     * @param Request $request
+     * @return bool
+     */
+    protected function verifyIllegality($lv, Request $request)
+    {
+        if ($request->user()->id != 1 && $request->user()->lv >= $lv)
+            return true;
+        return false;
+    }
 }

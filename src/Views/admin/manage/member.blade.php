@@ -19,28 +19,29 @@
         <div class="col-md-12">
             <div class="box box-success">
                 <div class="box-header with-border">
-                    <a href="{{ route('admin-manage-menu-add') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> 创建</a>
+                    <a href="{{ route('admin-manage-member-add') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> 创建</a>
                 </div>
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <thead>
                         <tr>
                             <th class="text-center border-right">{{ getLang('fieldsAdminMember.id') }}</th>
+                            <th class="text-center border-right">头像</th>
                             <th class="text-center border-right">{{ getLang('fieldsAdminMember.nickname') }}</th>
                             <th class="text-center border-right">{{ getLang('fieldsAdminMember.username') }}</th>
                             <th class="text-center border-right">{{ getLang('fieldsAdminMember.group') }}</th>
                             <th class="text-center border-right">{{ getLang('fieldsAdminMember.email') }}</th>
                             <th class="text-center border-right">{{ getLang('fieldsAdminMember.lastLogin') }}</th>
-                            <th class="text-center" style="width: 12%;">{{ getLang('Tips.operation') }}</th>
+                            <th class="text-center">{{ getLang('Tips.operation') }}</th>
                         </tr>
                         </thead>
                         @foreach($members as $v)
                             <tr>
                                 <td class="text-center border-right">{{ $v->id }}</td>
                                 <td class="text-center border-right">
-                                    <img src="{{ route('img-member', ['uid' => $v->id, 'sourceName' => $v->thumb, 'size' => '20x20']) }}" width="22" alt="{{ $v->realName ? $v->realName : $v->name }}">
-                                    <span>{{ $v->realName ? $v->realName : $v->name }}</span>
+                                    <img src="{{ route('img-member', ['uid' => $v->id, 'sourceName' => $v->thumb, 'size' => '22x22']) }}" width="22" alt="{{ $v->realName ? $v->realName : $v->name }}">
                                 </td>
+                                <td class="text-center border-right">{{ $v->realName ? $v->realName : $v->name }}</td>
                                 <td class="text-center border-right">{{ $v->name }}</td>
                                 <td class="text-center border-right"><span class="label" style="background-color: {{ $group[$v->groupID]->color }}">{{ $group[$v->groupID]->name }}</span></td>
                                 <td class="text-center border-right">{{ $v->email }}</td>
