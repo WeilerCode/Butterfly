@@ -21,4 +21,17 @@ class AdminMenu extends Model
     ];
 
     protected $dates = ['deleted_at'];
+
+    /**
+     * 返回carbon改为返回Unix时间戳
+     * @return time
+     */
+    public function freshTimestamp()
+    {
+        return time();
+    }
+    public function fromDateTime($value)
+    {
+        return $value;
+    }
 }
