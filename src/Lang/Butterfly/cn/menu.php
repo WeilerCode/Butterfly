@@ -68,6 +68,9 @@ return [
             'edit-post'         =>      '修改用户(POST)',
             'del'               =>      '删除用户',
             'upload'            =>      '上传头像(POST)',
+        ],
+        'log'                   =>      [
+            'index'             =>      '后台日志'
         ]
     ]
 ];

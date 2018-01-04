@@ -52,3 +52,54 @@ function butterflyAdminJump($type='success', $msg='', $url=null, $seconds=3)
     $title = getLang('Tips.'.$title);
     return view($jump)->with(['jumpMsg' => $msg,'jumpUrl' => $url,'jumpSeconds' => $seconds,'title' => $title]);
 }
+
+/** Json数据格式化
+ * @param  array  $data   数据
+ * @param  String $indent 缩进字符，默认4个空格
+ * @return JSON
+ */
+function jsonFormat($data, $indent=null){
+    // json encode
+    $data = json_encode($data,JSON_UNESCAPED_UNICODE);
+
+    // 缩进处理
+    $ret = '';
+    $pos = 0;
+    $length = strlen($data);
+    $indent = isset($indent)? $indent : '    ';
+    $newline = "\n";
+    $prevchar = '';
+    $outofquotes = true;
+
+    for($i=0; $i<=$length; $i++){
+
+        $char = substr($data, $i, 1);
+
+        if($char=='"' && $prevchar!='\\'){
+            $outofquotes = !$outofquotes;
+        }elseif(($char=='}' || $char==']') && $outofquotes){
+            $ret .= $newline;
+            $pos --;
+            for($j=0; $j<$pos; $j++){
+                $ret .= $indent;
+            }
+        }
+
+        $ret .= $char;
+
+        if(($char==',' || $char=='{' || $char=='[') && $outofquotes){
+            $ret .= $newline;
+            if($char=='{' || $char=='['){
+                $pos ++;
+            }
+
+            for($j=0; $j<$pos; $j++){
+                $ret .= $indent;
+            }
+        }
+
+        $prevchar = $char;
+    }
+
+    return $ret;
+}

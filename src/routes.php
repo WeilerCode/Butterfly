@@ -9,7 +9,6 @@
 //WEB
 Route::group(['namespace' => 'Weiler\Butterfly\Http\Controllers', 'middleware' => ['web']], function () {
     Route::get('/', function (\Illuminate\Http\Request $request) {
-        dd(getLang('butterfly::Tips.createSuccess'));
     })->name('hhh');
 
     // Img
@@ -72,6 +71,10 @@ Route::group(['namespace' => 'Weiler\Butterfly\Http\Controllers', 'middleware' =
                     Route::post('edit-post/{id?}', ['uses' => 'MemberController@postEdit'])->name('admin-manage-member-edit-post');
                     Route::get('del/{id}', ['uses' => 'MemberController@getDel'])->name('admin-manage-member-del');
                     Route::post('upload-img', ['uses'=>'MemberController@uploadImg'])->name('admin-manage-member-uploadImg');
+                });
+                // 后台日志
+                Route::group(['prefix' => 'log'], function() {
+                    Route::get('/', ['uses' => 'LogController@index'])->name('admin-manage-log');
                 });
             });
         });
