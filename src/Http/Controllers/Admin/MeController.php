@@ -34,11 +34,15 @@ class MeController extends AdminController
         if ($validator)
             return redirect()->back()->withErrors($validator)->withInput();
 
+        //修改前的值
+        $origin = User::find($request->user()->id)->toArray();
         // update
         if (User::where('id', $request->user()->id)->update($request->input('password') ?
             $request->except('_token', 'password_confirmation') :
             $request->except('_token', 'password', 'password_confirmation')
         )) {
+            // setLog
+            $this->setLog($request->user()->id, 'update', 'me.update', json_encode($origin), json_encode($request->except('_token', 'password_confirmation')));
             return butterflyAdminJump('success', getLang('Tips.updateSuccess'), '', 1);
         }
         return butterflyAdminJump('error', getLang('Tips.updateFail'), '', 1);
@@ -72,10 +76,13 @@ class MeController extends AdminController
                 $backData = $uploadImg->upThumb($avatar_file, $avatar_data, $aspectRatio);
                 if(count($backData) > 0)
                 {
+                    $origin = User::where('id', $request->user()->id)->first();
                     //更新数据
                     $check = User::where('id', $request->user()->id)->update(['thumb' => $backData['data']['name']]);
                     if($check)
                     {
+                        // setLog
+                        $this->setLog($request->user()->id, 'update', 'me.uploadImg', json_encode($origin), json_encode($backData));
                         $backData['msg'] = '更新成功';
                     }else{
                         $backData['msg'] = '更新失败';
