@@ -15,22 +15,8 @@ class AdminLog extends Model
      * @var array
      */
     protected $fillable = [
-        'type', 'uid', 'event', 'origin', 'ending', 'ip', 'iso_code', 'city'
+        'type', 'uid', 'event', 'origin', 'ending', 'ip', 'iso_code', 'city', 'created_at'
     ];
 
-    /**
-     * 返回carbon改为返回Unix时间戳
-     * @return time
-     */
-    public function freshTimestamp()
-    {
-        return time();
-    }
-    public function fromDateTime($value)
-    {
-        return $value;
-    }
-    protected function asDateTime($value) {
-        return $value;
-    }
+    public $timestamps = false;
 }
