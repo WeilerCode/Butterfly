@@ -4,6 +4,7 @@ namespace Weiler\Butterfly\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Weiler\Butterfly\Jobs\RecordLog;
 
 class AdminController extends Controller
 {
@@ -33,5 +34,23 @@ class AdminController extends Controller
         if ($request->user()->id != 1 && $request->user()->lv >= $lv)
             return true;
         return false;
+    }
+
+    /**
+     * 记录后台日志
+     * @param $uid
+     * @param $type
+     * @param string $event
+     * @param null $origin
+     * @param null $ending
+     */
+    protected function setLog($uid, $type, $event = '', $origin = NULL, $ending = NULL)
+    {
+        $address = [
+            'ip'        =>  getIp(),
+            'iso_code'  =>  '',
+            'city'      =>  ''
+        ];
+        RecordLog::dispatch($uid, $address, $event, time(), $type, $origin, $ending);
     }
 }
