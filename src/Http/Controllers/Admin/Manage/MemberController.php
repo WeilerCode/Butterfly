@@ -48,7 +48,7 @@ class MemberController extends AdminController
             return redirect()->back()->withErrors($validator)->withInput();
         // 获取group
         $group = UserAdminGroup::all()->keyBy('id');
-        if (isset($group[$request->input('groupID')]) && User::create([
+        $data = [
             'type'      =>  "system",
             'lv'        =>  $group[$request->input('groupID')]->lv,
             'name'      =>  $request->input('name'),
@@ -60,7 +60,10 @@ class MemberController extends AdminController
             'verifyTime'=>  Carbon::create(),
             'groupID'   =>  $request->input('groupID'),
             'password'  =>  bcrypt($request->input('password'))
-        ])) {
+        ];
+        if (isset($group[$request->input('groupID')]) && User::create($data)) {
+            // setLog
+            $this->setLog($request->user()->id, 'create', 'manage.member.add', NULL, json_encode($data));
             return butterflyAdminJump('success', getLang('Tips.createSuccess'), route('admin-manage-member'), 1);
         }
         return butterflyAdminJump('error', getLang('Tips.createFail'), route('admin-manage-member'), 1);
@@ -89,8 +92,7 @@ class MemberController extends AdminController
     {
         // 验证条件
         $rule = [
-            'groupID'       =>  'required',
-            'name'          =>  'required|unique:butterfly_users,name,'.$id,
+            'groupID'       =>  'required'
         ];
         if ($request->input('email'))
             $rule['email'] = 'email|max:255|unique:butterfly_users,email,'.$id;
@@ -112,10 +114,14 @@ class MemberController extends AdminController
             'groupID'   =>  $request->input('groupID'),
             'password'  =>  bcrypt($request->input('password'))
         ];
+        //修改前的值
+        $origin = User::find($id)->toArray();
         // 判断是否修改password
         if ($request->input('password'))
             $data['password'] = $request->input('password');
         if (isset($group[$request->input('groupID')]) && User::where('id', $id)->update($data)) {
+            // setLog
+            $this->setLog($request->user()->id, 'update', 'manage.member.edit', json_encode($origin), json_encode($data));
             return butterflyAdminJump('success', getLang('Tips.updateSuccess'), route('admin-manage-member-edit', ['id' => $id]), 1);
         }
         return butterflyAdminJump('error', getLang('Tips.updateFail'), route('admin-manage-member-edit', ['id' => $id]), 1);
@@ -131,15 +137,20 @@ class MemberController extends AdminController
         // 不得删除root用户
         if ((int)$id === 1)
             return butterflyAdminJump('error', getLang('Tips.userNotDelete'),'',1);
-        //获取用户
+        // 获取用户
         $user = User::find($id);
         if (!empty($user))
         {
             if ($this->verifyIllegality($user->lv, $request))
                 return butterflyAdminJump('error', getLang('Tips.illegal'));
+            // 删除前
+            $origin = $user->toArray();
             if ($user->delete())
+            {
+                // setLog
+                $this->setLog($request->user()->id, 'delete', 'manage.member.del', json_encode($origin), NULL);
                 return butterflyAdminJump('success', getLang('Tips.deleteSuccess'),'',1);
-
+            }
         }
         return butterflyAdminJump('error', getLang('Tips.illegal'),'',1);
     }
@@ -177,10 +188,14 @@ class MemberController extends AdminController
                 $backData = $uploadImg->upThumb($avatar_file, $avatar_data, $aspectRatio);
                 if(count($backData) > 0)
                 {
+                    // 更新前
+                    $origin = User::where('id', $request->input('uid'))->first();
                     //更新数据
                     $check = User::where('id', $request->input('uid'))->update(['thumb' => $backData['data']['name']]);
                     if($check)
                     {
+                        // setLog
+                        $this->setLog($request->user()->id, 'update', 'manage.member.uploadImg', json_encode($origin), json_encode($backData));
                         $backData['msg'] = '更新成功';
                     }else{
                         $backData['msg'] = '更新失败';
