@@ -18,7 +18,7 @@
             <div class="box box-success">
                 <div class="box-body">
                     <!-- The timeline -->
-                    @if($log)
+                    @if(count($log))
                         <?php
                             $color = ['bg-red', 'bg-yellow', 'bg-aqua', 'bg-blue', 'bg-light-blue', 'bg-green',
                                 'bg-navy', 'bg-teal', 'bg-olive', 'bg-orange', 'bg-fuchsia', 'bg-purple', 'bg-maroon',
