@@ -56,7 +56,7 @@ function butterflyAdminJump($type='success', $msg='', $url=null, $seconds=3)
 /** Json数据格式化
  * @param  array  $data   数据
  * @param  String $indent 缩进字符，默认4个空格
- * @return JSON
+ * @return string
  */
 function jsonFormat($data, $indent=null){
     // json encode
@@ -102,4 +102,22 @@ function jsonFormat($data, $indent=null){
     }
 
     return $ret;
+}
+
+//获取用户真实IP
+function getIp() {
+    if (getenv("HTTP_CLIENT_IP") && strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown"))
+        $ip = getenv("HTTP_CLIENT_IP");
+    else
+        if (getenv("HTTP_X_FORWARDED_FOR") && strcasecmp(getenv("HTTP_X_FORWARDED_FOR"), "unknown"))
+            $ip = getenv("HTTP_X_FORWARDED_FOR");
+        else
+            if (getenv("REMOTE_ADDR") && strcasecmp(getenv("REMOTE_ADDR"), "unknown"))
+                $ip = getenv("REMOTE_ADDR");
+            else
+                if (isset ($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], "unknown"))
+                    $ip = $_SERVER['REMOTE_ADDR'];
+                else
+                    $ip = "unknown";
+    return ($ip);
 }
