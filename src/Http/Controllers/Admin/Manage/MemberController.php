@@ -63,7 +63,7 @@ class MemberController extends AdminController
         ];
         if (isset($group[$request->input('groupID')]) && User::create($data)) {
             // setLog
-            $this->setLog($request->user()->id, 'create', 'manage.member.add', NULL, json_encode($data));
+            $this->setLog($request->user()->id, 'create', 'adminLogEvent.manage.member.add', NULL, json_encode($data));
             return butterflyAdminJump('success', getLang('Tips.createSuccess'), route('admin-manage-member'), 1);
         }
         return butterflyAdminJump('error', getLang('Tips.createFail'), route('admin-manage-member'), 1);
@@ -121,7 +121,7 @@ class MemberController extends AdminController
             $data['password'] = $request->input('password');
         if (isset($group[$request->input('groupID')]) && User::where('id', $id)->update($data)) {
             // setLog
-            $this->setLog($request->user()->id, 'update', 'manage.member.edit', json_encode($origin), json_encode($data));
+            $this->setLog($request->user()->id, 'update', 'adminLogEvent.manage.member.edit', json_encode($origin), json_encode($data));
             return butterflyAdminJump('success', getLang('Tips.updateSuccess'), route('admin-manage-member-edit', ['id' => $id]), 1);
         }
         return butterflyAdminJump('error', getLang('Tips.updateFail'), route('admin-manage-member-edit', ['id' => $id]), 1);
@@ -148,7 +148,7 @@ class MemberController extends AdminController
             if ($user->delete())
             {
                 // setLog
-                $this->setLog($request->user()->id, 'delete', 'manage.member.del', json_encode($origin), NULL);
+                $this->setLog($request->user()->id, 'delete', 'adminLogEvent.manage.member.del', json_encode($origin), NULL);
                 return butterflyAdminJump('success', getLang('Tips.deleteSuccess'),'',1);
             }
         }
@@ -195,7 +195,7 @@ class MemberController extends AdminController
                     if($check)
                     {
                         // setLog
-                        $this->setLog($request->user()->id, 'update', 'manage.member.uploadImg', json_encode($origin), json_encode($backData));
+                        $this->setLog($request->user()->id, 'update', 'adminLogEvent.manage.member.uploadImg', json_encode($origin), json_encode($backData));
                         $backData['msg'] = '更新成功';
                     }else{
                         $backData['msg'] = '更新失败';

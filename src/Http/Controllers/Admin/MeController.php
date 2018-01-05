@@ -42,7 +42,7 @@ class MeController extends AdminController
             $request->except('_token', 'password', 'password_confirmation')
         )) {
             // setLog
-            $this->setLog($request->user()->id, 'update', 'me.update', json_encode($origin), json_encode($request->except('_token', 'password_confirmation')));
+            $this->setLog($request->user()->id, 'update', 'adminLogEvent.me.update', json_encode($origin), json_encode($request->except('_token', 'password_confirmation')));
             return butterflyAdminJump('success', getLang('Tips.updateSuccess'), '', 1);
         }
         return butterflyAdminJump('error', getLang('Tips.updateFail'), '', 1);
@@ -82,7 +82,7 @@ class MeController extends AdminController
                     if($check)
                     {
                         // setLog
-                        $this->setLog($request->user()->id, 'update', 'me.uploadImg', json_encode($origin), json_encode($backData));
+                        $this->setLog($request->user()->id, 'update', 'adminLogEvent.me.uploadImg', json_encode($origin), json_encode($backData));
                         $backData['msg'] = '更新成功';
                     }else{
                         $backData['msg'] = '更新失败';
