@@ -5,6 +5,7 @@ namespace Weiler\Butterfly\Http\Controllers\Admin\Manage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Weiler\Butterfly\Http\Controllers\AdminController;
+use Weiler\Butterfly\Jobs\RecordLog;
 use Weiler\Butterfly\Models\AdminMenu;
 use Weiler\EasyTree\EasyTree;
 
@@ -73,16 +74,19 @@ class MenuController extends AdminController
         $validator = $this->validator($request->input(), $rule);
         if ($validator)
             return redirect()->back()->withErrors($validator)->withInput();
-        if (AdminMenu::create([
+        $data = [
             'name'      =>  $request->input('name'),
             'parentID'  =>  $request->input('parentID'),
             'routeName' =>  $request->input('routeName') ? $request->input('routeName') : '',
             'listOrder' =>  $request->input('listOrder'),
             'display'   =>  $request->has('display') ? 1 : 0,
             'icon'      =>  $request->input('icon') ? $request->input('icon') : ''
-        ])) {
+        ];
+        if (AdminMenu::create($data)) {
             // 清除目录树缓存
             Cache::forget('butterfly.cache_name.admin_menu');
+            // setLog
+            $this->setLog($request->user()->id, 'create', 'adminLogEvent.manage.menu.add', NULL, json_encode($data));
             return butterflyAdminJump('success', getLang('Tips.createSuccess'), route('admin-manage-menu'), 1);
         }
         return butterflyAdminJump('error', getLang('Tips.createFail'), route('admin-manage-menu'), 1);
@@ -117,16 +121,21 @@ class MenuController extends AdminController
         if ($validator)
             return redirect()->back()->withErrors($validator)->withInput();
 
-        if (AdminMenu::where('id', $id)->update([
+        $data = [
             'name'      =>  $request->input('name'),
             'parentID'  =>  $request->input('parentID'),
             'routeName' =>  $request->input('routeName') ? $request->input('routeName') : '',
             'listOrder' =>  $request->input('listOrder'),
             'display'   =>  $request->has('display') ? 1 : 0,
             'icon'      =>  $request->input('icon') ? $request->input('icon') : ''
-        ])) {
+        ];
+        // 修改前的值
+        $origin = AdminMenu::find($id)->toArray();
+        if (AdminMenu::where('id', $id)->update($data)) {
             // 清除目录树缓存
             Cache::forget('butterfly.cache_name.admin_menu');
+            // setLog
+            $this->setLog($request->user()->id, 'update', 'adminLogEvent.manage.menu.edit', json_encode($origin), json_encode($data));
             return butterflyAdminJump('success', getLang('Tips.updateSuccess'), route('admin-manage-menu-edit', ['id' => $id]), 1);
         }
         return butterflyAdminJump('error', getLang('Tips.updateFail'), route('admin-manage-menu-edit', ['id' => $id]), 1);
@@ -135,9 +144,10 @@ class MenuController extends AdminController
     /**
      * 删除目录
      * @param $id
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getDel($id)
+    public function getDel($id, Request $request)
     {
         //获取目录
         $menu = AdminMenu::all()->keyBy('id')->toArray();
@@ -150,10 +160,15 @@ class MenuController extends AdminController
             $array = array_merge($array, $child);
         }
 
+        //获取原值
+        $origin = AdminMenu::whereIn('id', $array)->get()->toArray();
+
         if (AdminMenu::destroy($array))
         {
             // 清除目录树缓存
             Cache::forget('butterfly.cache_name.admin_menu');
+            // setLog
+            $this->setLog($request->user()->id, 'del', 'adminLogEvent.manage.menu.del', json_encode($origin), NULL);
             return butterflyAdminJump('success', getLang('Tips.deleteSuccess'),'',1);
         }
         return butterflyAdminJump('error', getLang('Tips.illegal'),'',1);
@@ -170,12 +185,15 @@ class MenuController extends AdminController
         $menu = AdminMenu::find($request->input('id'));
         if(!empty($menu))
         {
+            // 修改前
             $origin = $menu->toArray();
             $menu->display = $request->input('display');
             if ($menu->save())
             {
                 // 清除目录树缓存
                 Cache::forget('butterfly.cache_name.admin_menu');
+                // setLog
+                $this->setLog($request->user()->id, 'del', 'adminLogEvent.manage.menu.display', json_encode($origin), json_encode($request->except('_token')));
                 return json_encode([
                     'result'    =>  'OK',
                     'code'      =>  200,
