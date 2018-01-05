@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "weiler/upload-img": "^1.0"
+        "weiler/easy-tree": "1.*",
+        "weiler/upload-img": "1.*"
     },
     "autoload": {
         "psr-4": {
