@@ -181,7 +181,6 @@ class MenuController extends AdminController
      */
     public function display(Request $request)
     {
-
         $menu = AdminMenu::find($request->input('id'));
         if(!empty($menu))
         {
