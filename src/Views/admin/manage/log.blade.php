@@ -43,7 +43,7 @@
                                         <div class="timeline-item">
                                             <span class="time"><i class="fa fa-clock-o"></i> {{ date('d H:i:s', $v->created_at) }}</span>
 
-                                            <h3 class="timeline-header">{{ getLang($v->event) }}</h3>
+                                            <h3 class="timeline-header" style="color: #3c8dbc">{{ getLang($v->event) }}</h3>
 
                                             <div class="timeline-body">
                                                 <div class="row">
