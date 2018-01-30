@@ -2,7 +2,6 @@
 
 namespace Weiler\Butterfly\Http\Controllers\Admin\Manage;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Weiler\Butterfly\Http\Controllers\AdminController;
 use Weiler\Butterfly\Models\User;
