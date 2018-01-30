@@ -57,7 +57,7 @@ class MemberController extends AdminController
             'email'     =>  $request->input('email') ? $request->input('email') : '',
             'phone'     =>  $request->input('phone') ? $request->input('phone') : '',
             'verify'    =>  1,
-            'verifyTime'=>  Carbon::create(),
+            'verifyTime'=>  time(),
             'groupID'   =>  $request->input('groupID'),
             'password'  =>  bcrypt($request->input('password'))
         ];
