@@ -19,6 +19,8 @@
     <script>
         $(function () {
             $(".select2").select2();
+            // 禁止上传头像后刷新页面
+            toastr.options.isReload = false;
         })
     </script>
 @endsection
