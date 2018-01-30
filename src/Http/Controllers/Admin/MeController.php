@@ -3,15 +3,21 @@
 namespace Weiler\Butterfly\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Weiler\Butterfly\Http\Controllers\AdminController;
 use Weiler\Butterfly\Models\User;
 use Weiler\UploadImg\UploadImg;
 
 class MeController extends AdminController
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('butterfly::admin.me');
+        // 获取日志信息
+        $log = DB::table('butterfly_admin_log')
+            ->where('uid', $request->user()->id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+        return view('butterfly::admin.me')->with(['log' => $log]);
     }
 
     /**
