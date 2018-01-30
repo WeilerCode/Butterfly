@@ -14,15 +14,13 @@
 @section('js')
     <script>
         $(function () {
-            $("[type='checkbox']").bootstrapSwitch();
+            $(".switch").bootstrapSwitch();
 
-            $("[type='checkbox']").on('switchChange.bootstrapSwitch', function(event, state) {
+            $(".switch").on('switchChange.bootstrapSwitch', function(event, state) {
                 var id = $(this).data('id');
                 var display = 0;
                 if(state)
-                {
                     display = 1;
-                }
                 $.ajax({
                     url: "{{ route('admin-manage-menu-display') }}",
                     data: { id:id,display:display},
