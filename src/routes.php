@@ -50,6 +50,7 @@ Route::group(['namespace' => 'Weiler\Butterfly\Http\Controllers', 'middleware' =
                     Route::post('edit-post/{id}', ['uses' => 'MenuController@postEdit'])->name('admin-manage-menu-edit-post');
                     Route::get('del/{id}', ['uses' => 'MenuController@getDel'])->name('admin-manage-menu-del');
                     Route::post('display', ['uses' => 'MenuController@display'])->name('admin-manage-menu-display');
+                    Route::post('sort', ['uses' => 'MenuController@sort'])->name('admin-manage-menu-sort');
                 });
                 // 目录管理
                 Route::group(['prefix' => 'permissions'], function () {

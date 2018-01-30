@@ -16,7 +16,7 @@ class MenuController extends AdminController
      */
     public function index()
     {
-        $menu = AdminMenu::all()->toArray();
+        $menu = AdminMenu::orderBy('listOrder', 'asc')->get()->toArray();
         $tree = Cache::remember('butterfly.cache_name.admin_menu', 1440, function() use ($menu) {
 
             foreach ($menu as $k=>$v)
@@ -29,7 +29,7 @@ class MenuController extends AdminController
             }
             //设置模板
             $template = "<tr>
-                            <td class='text-center border-right'><input type='text' name='listorder[\$v[id]]' value='\$v[listOrder]' style='width:40px;'></td>
+                            <td class='text-center border-right'><input type='text' name='listOrder[\$v[id]]' value='\$v[listOrder]' style='width:40px;'></td>
                             <td class='text-center'><i class='\$v[icon]'></i></td>
                             <td>\$spacer \$v[cname]</td>
                             <td class='text-center'><input class='switch' type='checkbox' data-id='\$v[id]' \$v[checked] data-on-text='".getLang('Tips.showON')."' data-off-text='".getLang('Tips.showOFF')."' data-label-width='0' data-on-color='success' data-off-color='danger' data-size='mini'></td>
@@ -204,6 +204,34 @@ class MenuController extends AdminController
             'code'      =>  400,
             'msg'       =>  getLang('Tips.updateFail')
         ]);
+    }
+
+    /**
+     * 排序
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function sort(Request $request)
+    {
+        $num = 0;
+        $listOrder = $request->input('listOrder');
+        // 格式化内容并跟新数据库
+        if (count($listOrder) > 0)
+        {
+            foreach ($listOrder as $key => $v) {
+                $thisMenu = AdminMenu::find($key);
+                if ($thisMenu->listOrder==$v)
+                    continue;
+                $thisMenu->listorder = $v;
+                if ($thisMenu->update())
+                    $num += 1;
+            }
+            if ($num > 0) {
+                Cache::forget('butterfly.cache_name.admin_menu');
+                return butterflyAdminJump('success', getLang('Tips.updateSuccess'),'',1);
+            }
+        }
+        return butterflyAdminJump('error', getLang('Tips.updateNone'),'',1);
     }
 
     /**

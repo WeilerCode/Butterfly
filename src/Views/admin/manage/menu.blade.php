@@ -44,26 +44,29 @@
     <div class="row">
         <div class="col-md-12">
             <div class="box box-success">
-                <div class="box-header with-border">
-                    <button type="submit" class="btn btn-default btn-sm"><i class="fa fa-sort-amount-asc"></i> 排序</button>
-                    <a href="{{ route('admin-manage-menu-add') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> 创建</a>
-                </div>
-                <div class="box-body table-responsive no-padding">
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th class="text-center border-right" style="width: 5%">{{ getLang('Tips.sort') }}</th>
-                            <th class="text-center">{{ getLang('fieldsMenu.icon') }}</th>
-                            <th>{{ getLang('fieldsMenu.menuName') }}</th>
-                            <th class="text-center">{{ getLang('fieldsMenu.display') }}</th>
-                            <th>{{ getLang('fieldsMenu.routeName') }}</th>
-                            <th class="text-center" style="width: 12%;">{{ getLang('Tips.operation') }}</th>
-                        </tr>
-                        </thead>
-                        {!! $tree !!}
-                    </table>
-                </div>
-                <!-- /.box-body -->
+                <form action="{{ route('admin-manage-menu-sort') }}" method="post">
+                    <div class="box-header with-border">
+                        <button type="submit" class="btn btn-default btn-sm"><i class="fa fa-sort-amount-asc"></i> 排序</button>
+                        {{ csrf_field() }}
+                        <a href="{{ route('admin-manage-menu-add') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> 创建</a>
+                    </div>
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th class="text-center border-right" style="width: 5%">{{ getLang('Tips.sort') }}</th>
+                                <th class="text-center">{{ getLang('fieldsMenu.icon') }}</th>
+                                <th>{{ getLang('fieldsMenu.menuName') }}</th>
+                                <th class="text-center">{{ getLang('fieldsMenu.display') }}</th>
+                                <th>{{ getLang('fieldsMenu.routeName') }}</th>
+                                <th class="text-center" style="width: 12%;">{{ getLang('Tips.operation') }}</th>
+                            </tr>
+                            </thead>
+                            {!! $tree !!}
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </form>
             </div>
             <!-- /.box -->
 
