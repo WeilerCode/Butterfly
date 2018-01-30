@@ -163,7 +163,7 @@ class MemberController extends AdminController
     public function uploadImg(UploadImg $uploadImg, Request $request)
     {
         // 查找用户
-        $member = User::find($request->input('id'));
+        $member = User::find($request->input('uid'));
         // 是否越级操作
         if ($member && $this->verifyIllegality($member->lv, $request))
             return butterflyAdminJump('error', getLang('Tips.illegal'));
