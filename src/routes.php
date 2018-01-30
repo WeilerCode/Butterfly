@@ -78,6 +78,19 @@ Route::group(['namespace' => 'Weiler\Butterfly\Http\Controllers', 'middleware' =
                     Route::get('/', ['uses' => 'LogController@index'])->name('admin-manage-log');
                 });
             });
+            // 后台管理
+            Route::group(['namespace' => 'Member', 'prefix' => 'member'], function () {
+                // 后台用户管理
+                Route::group(['prefix' => 'member'], function() {
+                    Route::get('/', ['uses' => 'MemberController@index'])->name('admin-member-member');
+                    Route::get('add', ['uses' => 'MemberController@getAdd'])->name('admin-member-member-add');
+                    Route::post('add-post', ['uses' => 'MemberController@postAdd'])->name('admin-member-member-add-post');
+                    Route::get('edit/{id}', ['uses' => 'MemberController@getEdit'])->name('admin-member-member-edit');
+                    Route::post('edit-post/{id?}', ['uses' => 'MemberController@postEdit'])->name('admin-member-member-edit-post');
+                    Route::get('del/{id}', ['uses' => 'MemberController@getDel'])->name('admin-member-member-del');
+                    Route::post('upload-img', ['uses'=>'MemberController@uploadImg'])->name('admin-member-member-uploadImg');
+                });
+            });
         });
     });
 });
