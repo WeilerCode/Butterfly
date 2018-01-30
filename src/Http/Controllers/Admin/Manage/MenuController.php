@@ -5,7 +5,6 @@ namespace Weiler\Butterfly\Http\Controllers\Admin\Manage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Weiler\Butterfly\Http\Controllers\AdminController;
-use Weiler\Butterfly\Jobs\RecordLog;
 use Weiler\Butterfly\Models\AdminMenu;
 use Weiler\EasyTree\EasyTree;
 
@@ -33,7 +32,7 @@ class MenuController extends AdminController
                             <td class='text-center border-right'><input type='text' name='listorder[\$v[id]]' value='\$v[listOrder]' style='width:40px;'></td>
                             <td class='text-center'><i class='\$v[icon]'></i></td>
                             <td>\$spacer \$v[cname]</td>
-                            <td class='text-center'><input class='switch switch-mini' type='checkbox' data-id='\$v[id]' name='show[\$v[id]]' \$v[checked] data-on-text='".getLang('Tips.showON')."' data-off-text='".getLang('Tips.showOFF')."' data-label-width='0' data-on-color='success' data-off-color='danger' data-size='mini'></td>
+                            <td class='text-center'><input class='switch' type='checkbox' data-id='\$v[id]' \$v[checked] data-on-text='".getLang('Tips.showON')."' data-off-text='".getLang('Tips.showOFF')."' data-label-width='0' data-on-color='success' data-off-color='danger' data-size='mini'></td>
                             <td>\$v[routeName]</td>
                             <td class='text-center'>
                                 <a href='\$v[addChildUrl]' class='btn btn-success btn-xs' data-toggle='tooltip' data-placement='top' data-original-title='".getLang('Tips.createSonMenu')."'><i class='fa fa-plus'></i></a>
