@@ -72,7 +72,15 @@ class MemberController extends AdminController
     }
 
     public function getEdit($id)
-    {}
+    {
+        // 获取当前用户信息
+        $member = User::find($id);
+        if (empty($member))
+            return redirect()->back();
+        // 获取分组
+        $group = UserMemberGroup::orderBy('lv', 'asc')->get()->keyBy('id');
+        return view('butterfly::admin.member.member-edit')->with(['group' => $group, 'member' => $member]);
+    }
     public function postEdit($id, Request $request)
     {}
 
@@ -114,7 +122,7 @@ class MemberController extends AdminController
                     if($check)
                     {
                         // setLog
-                        $this->setLog($request->user()->id, 'update', 'adminLogEvent.manage.member.uploadImg', json_encode($origin), json_encode($backData));
+                        $this->setLog($request->user()->id, 'update', 'adminLogEvent.member.member.uploadImg', json_encode($origin), json_encode($backData));
                         $backData['msg'] = '更新成功';
                     }else{
                         $backData['msg'] = '更新失败';
