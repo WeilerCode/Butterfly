@@ -57,7 +57,7 @@
                             {!! $error !!}
                         </div>
                         <div class="form-group @if($error = getValidationErrorForTemplate($errors, 'email')){{ 'has-error' }}@endif">
-                            <label>{{ getLang('fieldsAdminMember.email') }}</label>
+                            <label>{{ getLang('fieldsAdminMember.email') }} <span class="asterisk">*</span></label>
                             <input type="email" class="form-control" name="email" value="{{ old('email') ? old('email') : $member->email }}" placeholder="{{ getLang('fieldsAdminMember.emailHelp') }}">
                             {!! $error !!}
                         </div>

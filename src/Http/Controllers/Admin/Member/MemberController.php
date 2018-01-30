@@ -71,18 +71,64 @@ class MemberController extends AdminController
         return butterflyAdminJump('error', getLang('Tips.createFail'), route('admin-member-member'), 1);
     }
 
+    /**
+     * 修改会员信息
+     * @param $id
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
     public function getEdit($id)
     {
         // 获取当前用户信息
         $member = User::find($id);
         if (empty($member))
             return redirect()->back();
+        // 是否越级操作
+        if ($member->type == "system")
+            return butterflyAdminJump('error', getLang('Tips.illegal'));
         // 获取分组
         $group = UserMemberGroup::orderBy('lv', 'asc')->get()->keyBy('id');
         return view('butterfly::admin.member.member-edit')->with(['group' => $group, 'member' => $member]);
     }
     public function postEdit($id, Request $request)
-    {}
+    {
+        //修改前的值
+        $origin = User::find($id)->toArray();
+        // 是否越级操作
+        if ($origin['type'] == "system")
+            return butterflyAdminJump('error', getLang('Tips.illegal'));
+        // 验证条件
+        $rule = [
+            'groupID'       =>  'required',
+            'email'         =>  'email|max:255|unique:butterfly_users,email,'.$id
+        ];
+        if ($request->input('password'))
+            $rule['password'] = 'required|confirmed|min:6';
+        // 表单验证
+        $validator = $this->validator($request->input(), $rule);
+        if ($validator)
+            return redirect()->back()->withErrors($validator)->withInput();
+
+        // 获取group
+        $group = UserMemberGroup::all()->keyBy('id');
+        // 组织数据
+        $data = [
+            'lv'        =>  $group[$request->input('groupID')]->lv,
+            'realName'  =>  $request->input('realName') ? $request->input('realName') : '',
+            'email'     =>  $request->input('email') ? $request->input('email') : '',
+            'phone'     =>  $request->input('phone') ? $request->input('phone') : '',
+            'groupID'   =>  $request->input('groupID'),
+            'password'  =>  bcrypt($request->input('password'))
+        ];
+        // 判断是否修改password
+        if ($request->input('password'))
+            $data['password'] = $request->input('password');
+        if (isset($group[$request->input('groupID')]) && User::where('id', $id)->update($data)) {
+            // setLog
+            $this->setLog($request->user()->id, 'update', 'adminLogEvent.member.member.edit', json_encode($origin), json_encode($data));
+            return butterflyAdminJump('success', getLang('Tips.updateSuccess'), route('admin-member-member-edit', ['id' => $id]), 1);
+        }
+        return butterflyAdminJump('error', getLang('Tips.updateFail'), route('admin-member-member-edit', ['id' => $id]), 1);
+    }
 
     public function getDel($id)
     {}
@@ -95,6 +141,11 @@ class MemberController extends AdminController
      */
     public function uploadImg(UploadImg $uploadImg, Request $request)
     {
+        // 更新前
+        $origin = User::where('id', $request->input('uid'))->first();
+        // 是否越级操作
+        if ($origin['type'] == "system")
+            return butterflyAdminJump('error', getLang('Tips.illegal'));
         if ($request->hasFile('cropperFile'))
         {
             if ($request->file('cropperFile')->isValid())
@@ -115,8 +166,6 @@ class MemberController extends AdminController
                 $backData = $uploadImg->upThumb($avatar_file, $avatar_data, $aspectRatio);
                 if(count($backData) > 0)
                 {
-                    // 更新前
-                    $origin = User::where('id', $request->input('uid'))->first();
                     //更新数据
                     $check = User::where('id', $request->input('uid'))->update(['thumb' => $backData['data']['name']]);
                     if($check)
