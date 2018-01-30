@@ -130,8 +130,35 @@ class MemberController extends AdminController
         return butterflyAdminJump('error', getLang('Tips.updateFail'), route('admin-member-member-edit', ['id' => $id]), 1);
     }
 
-    public function getDel($id)
-    {}
+    /**
+     * 删除用户
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getDel($id, Request $request)
+    {
+        // 不得删除root用户
+        if ((int)$id === 1)
+            return butterflyAdminJump('error', getLang('Tips.userNotDelete'),'',1);
+        // 获取用户
+        $user = User::find($id);
+        if (!empty($user))
+        {
+            // 是否越级操作
+            if ($user->type == "system")
+                return butterflyAdminJump('error', getLang('Tips.illegal'));
+            // 删除前
+            $origin = $user->toArray();
+            if ($user->delete())
+            {
+                // setLog
+                $this->setLog($request->user()->id, 'delete', 'adminLogEvent.member.member.del', json_encode($origin), NULL);
+                return butterflyAdminJump('success', getLang('Tips.deleteSuccess'),'',1);
+            }
+        }
+        return butterflyAdminJump('error', getLang('Tips.illegal'),'',1);
+    }
 
     /**
      * 上传图片
