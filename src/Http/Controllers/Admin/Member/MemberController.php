@@ -25,10 +25,51 @@ class MemberController extends AdminController
         return view('butterfly::admin.member.member')->with(['members' => $members, 'group' => $group]);
     }
 
+    /**
+     * 创建会员
+     * @return $this
+     */
     public function getAdd()
-    {}
+    {
+        // 获取分组
+        $group = UserMemberGroup::orderBy('lv', 'asc')->get()->keyBy('id');
+        return view('butterfly::admin.member.member-add')->with(['group' => $group]);
+    }
     public function postAdd(Request $request)
-    {}
+    {
+        // 验证条件
+        $rule = [
+            'groupID'       =>  'required',
+            'name'          =>  'required|unique:butterfly_users',
+            'email'         =>  'required|email|max:255|unique:butterfly_users',
+            'password'      =>  'required|confirmed|min:6'
+        ];
+        // 表单验证
+        $validator = $this->validator($request->input(), $rule);
+        if ($validator)
+            return redirect()->back()->withErrors($validator)->withInput();
+        // 获取对应分组信息
+        $group = UserMemberGroup::all()->keyBy('id');
+        $data = [
+            'type'      =>  "member",
+            'lv'        =>  $group[$request->input('groupID')]->lv,
+            'name'      =>  $request->input('name'),
+            'realName'  =>  $request->input('realName') ? $request->input('realName') : '',
+            'thumb'     =>  '',
+            'email'     =>  $request->input('email'),
+            'phone'     =>  $request->input('phone') ? $request->input('phone') : '',
+            'verify'    =>  1,
+            'verifyTime'=>  time(),
+            'groupID'   =>  $request->input('groupID'),
+            'password'  =>  bcrypt($request->input('password'))
+        ];
+        if (isset($group[$request->input('groupID')]) && User::create($data)) {
+            // setLog
+            $this->setLog($request->user()->id, 'create', 'adminLogEvent.member.member.add', NULL, json_encode($data));
+            return butterflyAdminJump('success', getLang('Tips.createSuccess'), route('admin-member-member'), 1);
+        }
+        return butterflyAdminJump('error', getLang('Tips.createFail'), route('admin-member-member'), 1);
+    }
 
     public function getEdit($id)
     {}
