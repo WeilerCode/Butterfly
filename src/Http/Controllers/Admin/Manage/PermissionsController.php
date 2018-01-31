@@ -107,7 +107,7 @@ class PermissionsController extends AdminController
             if ($adminGroup->delete())
             {
                 //删除分组下的用户
-                User::where('groupID',$id)->delete();
+                User::where('type', 'system')->where('groupID',$id)->delete();
                 return butterflyAdminJump('success', getLang('Tips.deleteSuccess'),'',1);
             }
         }
