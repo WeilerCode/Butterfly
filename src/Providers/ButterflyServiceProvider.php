@@ -10,6 +10,7 @@
 namespace Weiler\Butterfly\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Weiler\Butterfly\Commands\Init;
 
 class ButterflyServiceProvider extends ServiceProvider
 {
@@ -39,6 +40,14 @@ class ButterflyServiceProvider extends ServiceProvider
                 __DIR__.'/../Lang/Laravel' => resource_path('lang'),
                 // butterfly translation
                 __DIR__.'/../Lang/Butterfly' => resource_path('lang/vendor/butterfly'),
+            ]);
+        }
+        // migrations
+        $this->loadMigrationsFrom(__DIR__.'/../Database/migrations');
+        // commands
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                Init::class
             ]);
         }
     }
