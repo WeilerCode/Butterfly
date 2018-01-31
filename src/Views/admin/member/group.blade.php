@@ -24,14 +24,14 @@
                         <thead>
                         <tr>
                             <th class="text-center border-right">等级</th>
-                            <th class="text-center">{{ getLang('fieldsAdminGroup.groupName') }}</th>
+                            <th class="text-center border-right">{{ getLang('fieldsAdminGroup.groupName') }}</th>
                             <th class="text-center">{{ getLang('Tips.operation') }}</th>
                         </tr>
                         </thead>
                         @foreach($group as $v)
                             <tr>
                                 <td class="text-center border-right">{{ $v->lv }}</td>
-                                <td class="text-center"><span class="label" style="background-color: {{ $v->color }}">{{ $v->name }}</span></td>
+                                <td class="text-center border-right"><span class="label" style="background-color: {{ $v->color }}">{{ $v->name }}</span></td>
                                 <td class="text-center">
                                     <a href="{{ route('admin-member-group-edit', ['id' => $v->id]) }}" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" data-original-title="{{ getLang('Tips.edit') }}"><i class="fa fa-pencil"></i></a>
                                     <button data-url="{{ route('admin-member-group-del', ['id' => $v->id]) }}" data-tips='{{ getLang('Tips.isDelete') }} : {{ $v->name }} ; {{ getLang('fieldsAdminGroup.deleteTips') }}' class='btn btn-danger btn-xs delete-table' data-toggle="tooltip" data-placement="top" data-original-title="{{ getLang('Tips.delete') }}"><i class="fa fa-times"></i></button>

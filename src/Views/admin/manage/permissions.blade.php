@@ -24,14 +24,14 @@
                         <thead>
                         <tr>
                             <th class="text-center border-right">{{ getLang('fieldsAdminGroup.level') }}</th>
-                            <th class="text-center">{{ getLang('fieldsAdminGroup.groupName') }}</th>
+                            <th class="text-center border-right">{{ getLang('fieldsAdminGroup.groupName') }}</th>
                             <th class="text-center">{{ getLang('Tips.operation') }}</th>
                         </tr>
                         </thead>
                         @foreach($group as $v)
                             <tr>
                                 <td class="text-center border-right">{{ $v->lv }}</td>
-                                <td class="text-center">{{ $v->name }}</td>
+                                <td class="text-center border-right">{{ $v->name }}</td>
                                 <td class="text-center">
                                     <a href="{{ route('admin-manage-permissions-permissions', ['groupID' => $v->id]) }}" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top" data-original-title="{{ getLang('Tips.authManage') }}"><i class="fa fa-get-pocket"></i></a>
                                     <a href="{{ route('admin-manage-permissions-edit-group', ['id' => $v->id]) }}" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" data-original-title="{{ getLang('Tips.edit') }}"><i class="fa fa-pencil"></i></a>
