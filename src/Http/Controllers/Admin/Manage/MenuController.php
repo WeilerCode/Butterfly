@@ -228,6 +228,7 @@ class MenuController extends AdminController
             }
             if ($num > 0) {
                 Cache::forget('butterfly.cache_name.admin_menu');
+                $this->setLog($request->user()->id, 'update', 'adminLogEvent.manage.menu.sort');
                 return butterflyAdminJump('success', getLang('Tips.updateSuccess'),'',1);
             }
         }
