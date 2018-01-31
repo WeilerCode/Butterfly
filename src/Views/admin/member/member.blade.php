@@ -215,6 +215,14 @@
                 <!-- /.box-body -->
                 @if($members->hasPages())
                 <div class="box-footer">
+                    <?php
+                        // filtrate字段
+                        $filtrate = ['groupID', 'time', 'searchType', 'keyword'];
+                        foreach ($filtrate as $v) {
+                            if (isset($_GET[$v]))
+                                $members->appends([$v => $_GET[$v]]);
+                        }
+                    ?>
                     {{ $members->links('butterfly::admin.pagination.default') }}
                 </div>
                 @endif
