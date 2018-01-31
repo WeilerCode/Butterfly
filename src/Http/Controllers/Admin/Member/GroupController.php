@@ -4,6 +4,7 @@ namespace Weiler\Butterfly\Http\Controllers\Admin\Member;
 
 use Illuminate\Http\Request;
 use Weiler\Butterfly\Http\Controllers\AdminController;
+use Weiler\Butterfly\Models\User;
 use Weiler\Butterfly\Models\UserMemberGroup;
 
 class GroupController extends AdminController
@@ -83,6 +84,22 @@ class GroupController extends AdminController
         return butterflyAdminJump('error', getLang('Tips.updateFail'), route('admin-member-group-edit', ['id' => $id]), 1);
     }
 
-    public function getDel()
-    {}
+    /**
+     * 删除分组
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getDel($id)
+    {
+        // 获取分组
+        $adminGroup = UserMemberGroup::find($id);
+        if (!empty($adminGroup)) {
+            if ($adminGroup->delete()) {
+                //删除分组下的用户
+                User::where('type', 'member')->where('groupID',$id)->delete();
+                return butterflyAdminJump('success', getLang('Tips.deleteSuccess'),'',1);
+            }
+        }
+        return butterflyAdminJump('error', getLang('Tips.illegal'),'',1);
+    }
 }
