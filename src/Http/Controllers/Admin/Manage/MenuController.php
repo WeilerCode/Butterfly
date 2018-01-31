@@ -30,10 +30,10 @@ class MenuController extends AdminController
             //设置模板
             $template = "<tr>
                             <td class='text-center border-right'><input type='text' name='listOrder[\$v[id]]' value='\$v[listOrder]' style='width:40px;'></td>
-                            <td class='text-center'><i class='\$v[icon]'></i></td>
-                            <td>\$spacer \$v[cname]</td>
-                            <td class='text-center'><input class='switch' type='checkbox' data-id='\$v[id]' \$v[checked] data-on-text='".getLang('Tips.showON')."' data-off-text='".getLang('Tips.showOFF')."' data-label-width='0' data-on-color='success' data-off-color='danger' data-size='mini'></td>
-                            <td>\$v[routeName]</td>
+                            <td class='text-center border-right'><i class='\$v[icon]'></i></td>
+                            <td class='border-right'>\$spacer \$v[cname]</td>
+                            <td class='text-center border-right'><input class='switch' type='checkbox' data-id='\$v[id]' \$v[checked] data-on-text='".getLang('Tips.showON')."' data-off-text='".getLang('Tips.showOFF')."' data-label-width='0' data-on-color='success' data-off-color='danger' data-size='mini'></td>
+                            <td class='border-right'>\$v[routeName]</td>
                             <td class='text-center'>
                                 <a href='\$v[addChildUrl]' class='btn btn-success btn-xs' data-toggle='tooltip' data-placement='top' data-original-title='".getLang('Tips.createSonMenu')."'><i class='fa fa-plus'></i></a>
                                 <a href='\$v[editUrl]' class='btn btn-primary btn-xs' data-toggle='tooltip' data-placement='top' data-original-title='".getLang('Tips.edit')."'><i class='fa fa-pencil'></i></a>

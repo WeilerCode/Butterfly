@@ -55,10 +55,10 @@
                             <thead>
                             <tr>
                                 <th class="text-center border-right" style="width: 5%">{{ getLang('Tips.sort') }}</th>
-                                <th class="text-center">{{ getLang('fieldsMenu.icon') }}</th>
-                                <th>{{ getLang('fieldsMenu.menuName') }}</th>
-                                <th class="text-center">{{ getLang('fieldsMenu.display') }}</th>
-                                <th>{{ getLang('fieldsMenu.routeName') }}</th>
+                                <th class="text-center border-right">{{ getLang('fieldsMenu.icon') }}</th>
+                                <th class="border-right">{{ getLang('fieldsMenu.menuName') }}</th>
+                                <th class="text-center border-right">{{ getLang('fieldsMenu.display') }}</th>
+                                <th class="border-right">{{ getLang('fieldsMenu.routeName') }}</th>
                                 <th class="text-center" style="width: 12%;">{{ getLang('Tips.operation') }}</th>
                             </tr>
                             </thead>
