@@ -41,11 +41,14 @@ class GroupController extends AdminController
         if ($validator)
             return redirect()->back()->withErrors($validator)->withInput();
 
-        if (UserMemberGroup::create([
+        $data = [
             'name'          =>  $request->input('name'),
             'lv'            =>  $request->input('lv'),
             'color'         =>  $request->input('color')
-        ])) {
+        ];
+        if (UserMemberGroup::create($data)) {
+            // setLog
+            $this->setLog($request->user()->id, 'create', 'adminLogEvent.member.group.add', NULL, json_encode($data));
             return butterflyAdminJump('success', getLang('Tips.createSuccess'), route('admin-member-group'), 1);
         }
         return butterflyAdminJump('error', getLang('Tips.createFail'), route('admin-member-group'), 1);
@@ -74,11 +77,16 @@ class GroupController extends AdminController
         if ($validator)
             return redirect()->back()->withErrors($validator)->withInput();
 
-        if (UserMemberGroup::where('id', $id)->update([
+        // 修改前的值
+        $origin = UserMemberGroup::find($id)->toArray();
+        $data = [
             'name'          =>  $request->input('name'),
             'lv'            =>  $request->input('lv'),
             'color'         =>  $request->input('color')
-        ])) {
+        ];
+        if (UserMemberGroup::where('id', $id)->update($data)) {
+            // setLog
+            $this->setLog($request->user()->id, 'update', 'adminLogEvent.member.group.edit', json_encode($origin), json_encode($data));
             return butterflyAdminJump('success', getLang('Tips.updateSuccess'), route('admin-member-group-edit', ['id' => $id]), 1);
         }
         return butterflyAdminJump('error', getLang('Tips.updateFail'), route('admin-member-group-edit', ['id' => $id]), 1);
@@ -87,16 +95,21 @@ class GroupController extends AdminController
     /**
      * 删除分组
      * @param $id
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getDel($id)
+    public function getDel($id, Request $request)
     {
         // 获取分组
         $adminGroup = UserMemberGroup::find($id);
+        // 删除前
+        $origin = $adminGroup->toArray();
         if (!empty($adminGroup)) {
             if ($adminGroup->delete()) {
                 //删除分组下的用户
                 User::where('type', 'member')->where('groupID',$id)->delete();
+                // setLog
+                $this->setLog($request->user()->id, 'delete', 'adminLogEvent.member.group.del', json_encode($origin), NULL);
                 return butterflyAdminJump('success', getLang('Tips.deleteSuccess'),'',1);
             }
         }

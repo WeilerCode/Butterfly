@@ -38,11 +38,11 @@ class AdminController extends Controller
 
     /**
      * 记录后台日志
-     * @param $uid
-     * @param $type
-     * @param string $event
-     * @param null $origin
-     * @param null $ending
+     * @param int $uid 执行事件的用户ID
+     * @param $type (login/create/update/delete/other) 事件类型
+     * @param string $event 事件名称
+     * @param string $origin 事件发生前的数据
+     * @param string $ending 事件发生后的数据
      */
     protected function setLog($uid, $type, $event = '', $origin = NULL, $ending = NULL)
     {

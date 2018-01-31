@@ -167,7 +167,7 @@ class MenuController extends AdminController
             // 清除目录树缓存
             Cache::forget('butterfly.cache_name.admin_menu');
             // setLog
-            $this->setLog($request->user()->id, 'del', 'adminLogEvent.manage.menu.del', json_encode($origin), NULL);
+            $this->setLog($request->user()->id, 'delete', 'adminLogEvent.manage.menu.del', json_encode($origin), NULL);
             return butterflyAdminJump('success', getLang('Tips.deleteSuccess'),'',1);
         }
         return butterflyAdminJump('error', getLang('Tips.illegal'),'',1);
@@ -191,7 +191,7 @@ class MenuController extends AdminController
                 // 清除目录树缓存
                 Cache::forget('butterfly.cache_name.admin_menu');
                 // setLog
-                $this->setLog($request->user()->id, 'del', 'adminLogEvent.manage.menu.display', json_encode($origin), json_encode($request->except('_token')));
+                $this->setLog($request->user()->id, 'update', 'adminLogEvent.manage.menu.display', json_encode($origin), json_encode($request->except('_token')));
                 return json_encode([
                     'result'    =>  'OK',
                     'code'      =>  200,

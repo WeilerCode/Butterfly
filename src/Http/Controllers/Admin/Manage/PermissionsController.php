@@ -51,7 +51,7 @@ class PermissionsController extends AdminController
         ];
         if (UserAdminGroup::create($data)) {
             // setLog
-            $this->setLog($request->user()->id, 'update', 'adminLogEvent.manage.permissions.add', NULL, json_encode($data));
+            $this->setLog($request->user()->id, 'create', 'adminLogEvent.manage.permissions.add', NULL, json_encode($data));
             return butterflyAdminJump('success', getLang('Tips.createSuccess'), route('admin-manage-permissions'), 1);
         }
         return butterflyAdminJump('error', getLang('Tips.createFail'), route('admin-manage-permissions'), 1);
@@ -119,7 +119,7 @@ class PermissionsController extends AdminController
                 //删除分组下的用户
                 User::where('type', 'system')->where('groupID',$id)->delete();
                 // setLog
-                $this->setLog($request->user()->id, 'update', 'adminLogEvent.manage.permissions.del', json_encode($origin), NULL);
+                $this->setLog($request->user()->id, 'delete', 'adminLogEvent.manage.permissions.del', json_encode($origin), NULL);
                 return butterflyAdminJump('success', getLang('Tips.deleteSuccess'),'',1);
             }
         }
