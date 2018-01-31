@@ -31,11 +31,13 @@ return [
             'del'               =>      '删除用户',
             'upload'            =>      '上传头像(POST)'
         ],
-        'memberGroup'           =>      [
-            'index'             =>      '分组管理',
+        'group'           =>      [
+            'index'             =>      '会员分组',
             'add'               =>      '添加分组',
+            'add-post'          =>      '添加分组(POST)',
             'edit'              =>      '修改分组',
-            'del'               =>      '删除分组'
+            'edit-post'         =>      '修改分组(POST)',
+            'del'               =>      '删除分组',
         ]
     ],
 
