@@ -201,7 +201,7 @@
                                 </td>
                                 <td class="text-center border-right">{{ $v->realName }}</td>
                                 <td class="text-center border-right">{{ $v->name }}</td>
-                                <td class="text-center border-right"><span class="label" style="background-color: {{ $group[$v->groupID]->color }}">{{ $group[$v->groupID]->name }}</span></td>
+                                <td class="text-center border-right"><span class="label" style="background-color: {{ isset($group[$v->groupID]) ? $group[$v->groupID]->color : '#000' }}">{{ isset($group[$v->groupID]) ? $group[$v->groupID]->name : '未知' }}</span></td>
                                 <td class="text-center border-right">{{ $v->email }}</td>
                                 <td class="text-center border-right">{{ $v->updated_at }}</td>
                                 <td class="text-center">
