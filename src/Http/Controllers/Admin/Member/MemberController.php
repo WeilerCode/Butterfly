@@ -19,10 +19,38 @@ class MemberController extends AdminController
     {
         // 获取会员列表
         $members = User::where('type', 'member');
+        // filtrate分组
+        if($request->has('groupID')) {
+            $members->where('groupID', $request->input('groupID'));
+        }
+        // filtrate时间段
+        if($request->has('time')) {
+            $time = explode(' - ',$request->input('time'));
+            if(isset($time[0]) && isset($time[1])) {
+                $startime = strtotime($time[0]);
+                $endtime = strtotime($time[1]);
+                $members->where('updated_at','>=',$startime)->where('updated_at','<=',$endtime);
+            }
+        }
+        // filtrate搜索
+        if($request->has('searchType') && $request->has('keyword')) {
+            switch ($request->input('searchType')) {
+                case 'id':
+                    $members->where('id',$request->input('keyword'));
+                    break;
+                case 'email':
+                case 'name':
+                case 'realName':
+                    $members->where($request->input('searchType'), 'LIKE', '%'.$request->input('keyword').'%');
+                    break;
+            }
+        }
+        // 用户总数
+        $sum = $members->count();
         $members = $members->orderBy('id', 'desc')->paginate(20);
         // 获取会员分组
         $group = UserMemberGroup::all()->keyBy('id');
-        return view('butterfly::admin.member.member')->with(['members' => $members, 'group' => $group]);
+        return view('butterfly::admin.member.member')->with(['members' => $members, 'group' => $group, 'sum' => $sum]);
     }
 
     /**
