@@ -268,7 +268,7 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">我的面板</a>
+                                    <a href="{{ route('admin-me') }}" class="btn btn-default btn-flat">我的面板</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="{{ action('\Weiler\Butterfly\Http\Controllers\Admin\Auth\AuthController@logout') }}" class="btn btn-default btn-flat">退出</a>
