@@ -43,12 +43,15 @@ class PermissionsController extends AdminController
         if ($validator)
             return redirect()->back()->withErrors($validator)->withInput();
 
-        if (UserAdminGroup::create([
+        $data = [
             'name'          =>  $request->input('name'),
             'lv'            =>  $request->input('lv'),
             'color'         =>  $request->input('color'),
             'permissions'   =>  '1,2,3,4'
-        ])) {
+        ];
+        if (UserAdminGroup::create($data)) {
+            // setLog
+            $this->setLog($request->user()->id, 'update', 'adminLogEvent.manage.permissions.add', NULL, json_encode($data));
             return butterflyAdminJump('success', getLang('Tips.createSuccess'), route('admin-manage-permissions'), 1);
         }
         return butterflyAdminJump('error', getLang('Tips.createFail'), route('admin-manage-permissions'), 1);
@@ -78,11 +81,16 @@ class PermissionsController extends AdminController
         if ($validator)
             return redirect()->back()->withErrors($validator)->withInput();
 
-        if (UserAdminGroup::where('id', $id)->update([
+        // 修改前的值
+        $origin = UserAdminGroup::find($id)->toArray();
+        $data = [
             'name'          =>  $request->input('name'),
             'lv'            =>  $request->input('lv'),
             'color'         =>  $request->input('color')
-        ])) {
+        ];
+        if (UserAdminGroup::where('id', $id)->update($data)) {
+            // setLog
+            $this->setLog($request->user()->id, 'update', 'adminLogEvent.manage.permissions.edit', json_encode($origin), json_encode($data));
             return butterflyAdminJump('success', getLang('Tips.updateSuccess'), route('admin-manage-permissions-edit-group', ['id' => $id]), 1);
         }
         return butterflyAdminJump('error', getLang('Tips.updateFail'), route('admin-manage-permissions-edit-group', ['id' => $id]), 1);
@@ -98,8 +106,10 @@ class PermissionsController extends AdminController
     {
         if ((int)$id === 1)
             return butterflyAdminJump('error', getLang('Tips.groupNotDelete'),'',1);
-        //获取用户
+        // 获取用户
         $adminGroup = UserAdminGroup::find($id);
+        // 删除前的数值
+        $origin = $adminGroup->toArray();
         if (!empty($adminGroup))
         {
             if ($this->verifyIllegality($adminGroup->lv, $request))
@@ -108,6 +118,8 @@ class PermissionsController extends AdminController
             {
                 //删除分组下的用户
                 User::where('type', 'system')->where('groupID',$id)->delete();
+                // setLog
+                $this->setLog($request->user()->id, 'update', 'adminLogEvent.manage.permissions.del', json_encode($origin), NULL);
                 return butterflyAdminJump('success', getLang('Tips.deleteSuccess'),'',1);
             }
         }
@@ -148,23 +160,24 @@ class PermissionsController extends AdminController
         $tree = $tree->setTemplate($template)->getTree();
         return view('butterfly::admin.manage.permissions-manage')->with(['tree' => $tree, 'groupID' => $groupID]);
     }
-
     public function postPermissions($groupID, Request $request)
     {
         $thisGroup = UserAdminGroup::find($groupID);
+        // 修改前
+        $origin = $thisGroup->toArray();
         //验证是否越级
         if ($this->verifyIllegality($thisGroup->lv, $request))
             return butterflyAdminJump('error', getLang('Tips.illegal'));
         //验证提交的菜单是否有权限修改
-        if ($request->user()->groupID != 1)
-        {
+        if ($request->user()->groupID != 1) {
             $userGroup = UserAdminGroup::find($request->user()->groupID);
             if (empty(array_diff(explode(',', $userGroup->permissions), $request->input('checked'))))
                 return butterflyAdminJump('error', getLang('Tips.illegal'));
         }
         $thisGroup->permissions = $request->has('checked') ? implode(',', $request->input('checked')) : '1';
-        if ($thisGroup->save())
-        {
+        if ($thisGroup->save()) {
+            // setLog
+            $this->setLog($request->user()->id, 'update', 'adminLogEvent.manage.permissions.permissions', json_encode($origin), json_encode($thisGroup->permissions));
             return butterflyAdminJump('success', getLang('Tips.updateSuccess'),'',1);
         }
         return butterflyAdminJump('error', getLang('Tips.updateFail'),'',1);
