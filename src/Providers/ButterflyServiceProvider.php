@@ -30,18 +30,17 @@ class ButterflyServiceProvider extends ServiceProvider
         // Views & Translations
         $this->loadViewsFrom(__DIR__.'/../Views', 'butterfly');
         $this->loadTranslationsFrom(__DIR__.'/../Lang/Butterfly', 'butterfly');
-        if (!config('app.debug'))
-        {
-            $this->publishes([
-                __DIR__.'/../Views' => resource_path('views/vendor/butterfly'),
-            ]);
-            $this->publishes([
-                // laravel translation
-                __DIR__.'/../Lang/Laravel' => resource_path('lang'),
-                // butterfly translation
-                __DIR__.'/../Lang/Butterfly' => resource_path('lang/vendor/butterfly'),
-            ]);
-        }
+
+        $this->publishes([
+            __DIR__.'/../Views' => resource_path('views/vendor/butterfly'),
+        ]);
+        $this->publishes([
+            // laravel translation
+            __DIR__.'/../Lang/Laravel' => resource_path('lang'),
+            // butterfly translation
+            __DIR__.'/../Lang/Butterfly' => resource_path('lang/vendor/butterfly'),
+        ]);
+
         // migrations
         $this->loadMigrationsFrom(__DIR__.'/../Database/migrations');
         // commands
