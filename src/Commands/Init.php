@@ -3,6 +3,7 @@
 namespace Weiler\Butterfly\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Schema;
 use Weiler\Butterfly\Models\AdminMenu;
 use Weiler\Butterfly\Models\User;
 use Weiler\Butterfly\Models\UserAdminGroup;
@@ -15,7 +16,7 @@ class Init extends Command
      *
      * @var string
      */
-    protected $signature = 'butterfly:init {--username=root} {--password=123123}';
+    protected $signature = 'butterfly:init';
 
     /**
      * The console command description.
@@ -25,15 +26,15 @@ class Init extends Command
     protected $description = 'Butterfly init';
 
     /**
-     * 默认用户名
+     * 用户名
      * @var string
      */
-    private $username = "root";
+    private $username;
     /**
-     * 默认密码
+     * 密码
      * @var string
      */
-    private $password = "123123";
+    private $password;
 
     /**
      * Create a new command instance.
@@ -52,36 +53,57 @@ class Init extends Command
      */
     public function handle()
     {
-        if ($this->option('username'))
-            $this->username = $this->option('username');
-        if ($this->option('password'))
-            $this->password = $this->option('password');
+        if (Schema::hasTable('migrations')) {
+            if (!$this->confirm('这个数据库中存在一些数据,确定初始化吗?')) {
+                return false;
+            }
+        }
+        $this->username = $this->ask('自定义管理员用户名', 'root');
+        $i = 0;
+        do {
+            if ($i > 0)
+                $this->error('两次密码输入不匹配.');
+            $password = $this->ask('请输入密码');
+            $password_confirmation = $this->ask('请再次输入密码');
+            $i++;
+        } while ($password != $password_confirmation);
+        $this->password = $password;
         // migrate
-        $this->call('migrate:refresh');
+        $this->callSilent('migrate:refresh');
         $this->createMenu();
         $this->createUser();
-        echo "---------------后台账户-------------\r\n";
-        echo "用户名:\t{$this->username}\r\n";
-        echo "密码:\t{$this->password}\r\n";
+        $this->line('');
+        $this->table(['后台地址', '用户名', '密码'], [
+            [
+                'path'      =>  route('admin-index'),
+                'username'  =>  $this->username,
+                'password'  =>  $this->password
+            ]
+        ]);
+        $this->info('successfully');
     }
 
     /**
      * 创建后台用户
      */
     private function createUser() {
-        //创建默认账户
+        $this->info('创建管理员账户:');
+        $bar = $this->output->createProgressBar(3);
+        // 创建默认账户
         UserAdminGroup::create([
             'name'              =>              '超级管理员',
             'lv'                =>              '1',
             'color'             =>              '#c41313',
             'permissions'       =>              NULL
         ]);
+        $bar->advance();
         UserMemberGroup::create([
             'name'              =>              '会员',
             'lv'                =>              '0',
             'color'             =>              '#c41313',
             'permissions'       =>              NULL
         ]);
+        $bar->advance();
         User::create([
             'type'              =>              'system',
             'lv'                =>              '1',
@@ -95,6 +117,8 @@ class Init extends Command
             'groupID'           =>              1,
             'password'          =>              bcrypt($this->password)
         ]);
+        $bar->advance();
+        $bar->finish();
     }
 
     /**
@@ -520,8 +544,14 @@ class Init extends Command
             ],
         ];
 
+        $this->info('初始化后台目录:');
+        $bar = $this->output->createProgressBar(count($menu));
         foreach ($menu as $v) {
             AdminMenu::create($v);
+
+            $bar->advance();
         }
+        $bar->finish();
+        $this->line('');
     }
 }
