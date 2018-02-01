@@ -78,9 +78,8 @@ class Init extends Command
         $this->createMenu();
         $this->createUser();
         $this->line('');
-        $this->table(['后台地址', '用户名', '密码'], [
+        $this->table(['用户名', '密码'], [
             [
-                'path'      =>  route('admin-index'),
                 'username'  =>  $this->username,
                 'password'  =>  $this->password
             ]
