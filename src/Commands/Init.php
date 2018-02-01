@@ -68,6 +68,11 @@ class Init extends Command
             $i++;
         } while ($password != $password_confirmation);
         $this->password = $password;
+        // 发布资源等
+        $this->call('vendor:publish', [
+            '--tag'     =>  'butterfly',
+            '--force'   =>  'default'
+        ]);
         // migrate
         $this->callSilent('migrate:refresh');
         $this->createMenu();
