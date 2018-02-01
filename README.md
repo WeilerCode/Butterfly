@@ -26,6 +26,10 @@
 5.初始化Butterfly `php artisan butterfly:init`
 
 6.如需使用本项目路由覆盖初始路由可以移除laravel自带的路由配置,或者加入 `app.php` 的 `providers` 配置中:  
-`Weiler\Butterfly\Providers\ButterflyServiceProvider::class`
+```php
+"providers" => [
+    Weiler\Butterfly\Providers\ButterflyServiceProvider::class
+]
+```
 
 7.开始Butterfly之旅吧!
