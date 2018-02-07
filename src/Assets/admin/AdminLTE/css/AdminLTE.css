@@ -431,7 +431,7 @@ a:focus {
 }
 @media (max-width: 767px) {
   .main-sidebar {
-    padding-top: 100px;
+    padding-top: 50px;
   }
 }
 @media (max-width: 767px) {
