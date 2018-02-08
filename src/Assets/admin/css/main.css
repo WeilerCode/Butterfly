@@ -69,3 +69,31 @@ dl {
     padding-top: 3px;
     padding-bottom: 3px;
 }
+
+/* BACK TOP */
+#back-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    cursor: pointer;
+    color: #EEE;
+    text-align: center;
+    z-index: 1000;
+    background-color: rgba(89, 95, 102, 0.5);
+    display: block;
+    width: 35px;
+    height: 35px;
+    -moz-transition: all 0.5s ease-in-out 0s;
+    -o-transition: all 0.5s ease-in-out 0s;
+    -webkit-transition: all 0.5s ease-in-out;
+    -webkit-transition-delay: 0s;
+    transition: all 0.5s ease-in-out 0s;
+    border-radius: 5px;
+}
+#back-top:hover {
+    background: #00a65a;
+}
+#back-top i {
+    font-size: 20px;
+    line-height: 30px;
+}

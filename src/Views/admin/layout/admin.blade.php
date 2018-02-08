@@ -181,6 +181,11 @@
 </div>
 <!-- ./wrapper -->
 
+<!-- Back top -->
+<div id="back-top" class="animated pulse circle" style="display: none;">
+    <i class="fa fa-angle-up"></i>
+</div>
+
 <!-- jQuery 3 -->
 <script src="{{ asset('vendor/butterfly/plugins/jQuery/jquery.min.js') }}"></script>
 <!-- Bootstrap 3.3.7 -->

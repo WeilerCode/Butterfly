@@ -51,4 +51,22 @@ $(function () {
             }
         });
     });
+
+    // back top
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 100) {
+            $('#back-top').addClass('show animated pulse');
+        } else {
+            $('#back-top').removeClass('show animated pulse');
+        }
+    });
+    // scroll body to 0px on click
+    $('#back-top').click(function () {
+        // Add sound
+
+        $('body,html').animate({
+            scrollTop: 0
+        }, 800);
+        return false;
+    });
 });
