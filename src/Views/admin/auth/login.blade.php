@@ -43,7 +43,7 @@
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
                         <label>
-                            <input type="checkbox"> 记住我
+                            <input name="remember" type="checkbox" @if(old('remember')) checked @endif> 记住我
                         </label>
                     </div>
                 </div>
