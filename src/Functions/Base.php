@@ -104,8 +104,11 @@ function jsonFormat($data, $indent=null){
     return $ret;
 }
 
-//获取用户真实IP
-function getIp() {
+/**
+ * 获取用户真实IP
+ * @return array|false|string
+ */
+function getIP() {
     if (getenv("HTTP_CLIENT_IP") && strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown"))
         $ip = getenv("HTTP_CLIENT_IP");
     else

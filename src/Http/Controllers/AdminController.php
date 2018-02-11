@@ -47,7 +47,7 @@ class AdminController extends Controller
     protected function setLog($uid, $type, $event = '', $origin = NULL, $ending = NULL)
     {
         $address = [
-            'ip'        =>  getIp(),
+            'ip'        =>  getIP(),
             'iso_code'  =>  '',
             'city'      =>  ''
         ];
