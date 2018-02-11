@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Weiler\Butterfly\Http\Controllers\Controller;
+use Weiler\Butterfly\Jobs\RecordLog;
 
 class AuthController extends Controller
 {
@@ -66,6 +67,12 @@ class AuthController extends Controller
 
 
         if ($this->attemptLogin($request)) {
+            $address = [
+                'ip'        =>  getIP(),
+                'iso_code'  =>  '',
+                'city'      =>  ''
+            ];
+            RecordLog::dispatch($request->user()->id, $address, 'adminLogEvent.login', time(), 'login');
             return $this->sendLoginResponse($request);
         }
 
