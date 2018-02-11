@@ -32,4 +32,4 @@
 ]
 ```
 
-7.开始Butterfly之旅吧!
+7.开始Butterfly之旅吧! 默认后台管理地址 `域名/admin`
