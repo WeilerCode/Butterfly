@@ -16,7 +16,7 @@
 ```
 3.执行 `composer require weiler/butterfly dev-master`
 
-4.创建数据库(utf-8)
+4.创建数据库(utf-8)  
 
 5.设置`.env`配置，配置app.php配置中的默认语言
 
