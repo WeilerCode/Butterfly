@@ -3,7 +3,7 @@
 
 ## Install
 1.安装laravel5.5  
-`composer create-project --prefer-dist laravel/laravel app`
+`composer create-project --prefer-dist laravel/laravel app "5.5.*"`
 
 2.加入git私有包发现到 `composer.json`
 ```json
