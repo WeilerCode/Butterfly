@@ -26,6 +26,7 @@ class CreateButterflyUsersTable extends Migration
             $table->integer('verifyTime')->unsigned()->nullable();
             $table->smallInteger('groupID');
             $table->string('password', 60);
+            $table->string('api_token', 60)->unique();
             $table->rememberToken();
             $table->integer('deleted_at')->unsigned()->nullable();
             $table->integer('created_at')->unsigned();

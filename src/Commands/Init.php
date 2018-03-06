@@ -119,7 +119,8 @@ class Init extends Command
             'verify'            =>              1,
             'verifyTime'        =>              time(),
             'groupID'           =>              1,
-            'password'          =>              bcrypt($this->password)
+            'password'          =>              bcrypt($this->password),
+            'api_token'         =>              str_random(60)
         ]);
         $bar->advance();
         $bar->finish();
