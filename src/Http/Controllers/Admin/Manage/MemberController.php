@@ -58,7 +58,8 @@ class MemberController extends AdminController
             'verify'    =>  1,
             'verifyTime'=>  time(),
             'groupID'   =>  $request->input('groupID'),
-            'password'  =>  bcrypt($request->input('password'))
+            'password'  =>  bcrypt($request->input('password')),
+            'api_token' =>  str_random(28).md5(time())
         ];
         if (isset($group[$request->input('groupID')]) && User::create($data)) {
             // setLog

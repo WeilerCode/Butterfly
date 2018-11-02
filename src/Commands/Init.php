@@ -120,7 +120,7 @@ class Init extends Command
             'verifyTime'        =>              time(),
             'groupID'           =>              1,
             'password'          =>              bcrypt($this->password),
-            'api_token'         =>              str_random(60)
+            'api_token'         =>              str_random(28).md5(time())
         ]);
         $bar->advance();
         $bar->finish();
