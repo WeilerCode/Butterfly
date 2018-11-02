@@ -1,5 +1,5 @@
 # butterfly
-基于larave的后台管理系统composer包
+基于laravel的后台管理系统composer包
 
 ## Install
 1.安装laravel5.5  
