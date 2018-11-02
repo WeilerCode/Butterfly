@@ -6,19 +6,19 @@ use Illuminate\Http\Request;
 
 class ImgController extends Controller
 {
-    private $memberPath;                    //用户图片地址
-    private $updatePath;                    //上传图片地址
+    protected $memberPath;                    //用户图片地址
+    protected $updatePath;                    //上传图片地址
 
-    private $imageSize  = false;            //根据getimagesize获取的图片大小和MIME
-    private $fileOpen   = false;            //打开后的文件流
+    protected $imageSize  = false;            //根据getimagesize获取的图片大小和MIME
+    protected $fileOpen   = false;            //打开后的文件流
 
-    private $memberDefault;                 //默认头像名
-    private $pictureDefault;                //默认图片
+    protected $memberDefault;                 //默认头像名
+    protected $pictureDefault;                //默认图片
 
-    private $width;                         //获取图片的尺寸
-    private $height;                        //获取图片的高度
-    private $thumbWidth;                    //缩略图宽
-    private $thumbHeight;                   //缩略图高
+    protected $width;                         //获取图片的尺寸
+    protected $height;                        //获取图片的高度
+    protected $thumbWidth;                    //缩略图宽
+    protected $thumbHeight;                   //缩略图高
 
     public function __construct()
     {
@@ -114,7 +114,7 @@ class ImgController extends Controller
      * 显示图片
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    private function showImg()
+    protected function showImg()
     {
         header ("Last-Modified: " . gmdate ('r', time()));
         header ("Expires: " . gmdate ("r", (time() + 604800)));
@@ -143,11 +143,10 @@ class ImgController extends Controller
 
     /**
      * 获取缩略图片名
-     * @param $sourceName
      * @param $size
      * @return string
      */
-    private function getThumbSize($size)
+    protected function getThumbSize($size)
     {
         if(!empty($size))
         {
@@ -165,10 +164,9 @@ class ImgController extends Controller
     /**
      * 打开文件流
      * 先尝试打开请求的缩略图,不成功则尝试打开源图
-     * @param $fullPath     String 缩略图相对地址
      * @param $sourcePath   String 源图相对地址
      */
-    private function openFile($sourcePath)
+    protected function openFile($sourcePath)
     {
         $this->imageSize = @getimagesize($sourcePath);
         if($this->imageSize) {
@@ -191,7 +189,7 @@ class ImgController extends Controller
     /**
      * 获取缩略图
      */
-    private function thumbFile()
+    protected function thumbFile()
     {
         $image_wp=imagecreatetruecolor($this->thumbWidth, $this->thumbHeight);
         // Add transparent background to destination image
