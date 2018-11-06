@@ -31,13 +31,15 @@
 
         <form action="{{ action('\Weiler\Butterfly\Http\Controllers\Admin\Auth\AuthController@login') }}" method="post">
             {{ csrf_field() }}
-            <div class="form-group has-feedback">
+            <div class="form-group has-feedback @if($error = getValidationErrorForTemplate($errors, 'name')){{ 'has-error' }}@endif">
                 <input type="text" name="name" class="form-control" placeholder="用户名">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                {!! $error !!}
             </div>
-            <div class="form-group has-feedback">
+            <div class="form-group has-feedback @if($error = getValidationErrorForTemplate($errors, 'password')){{ 'has-error' }}@endif">
                 <input type="password" name="password" class="form-control" placeholder="密码">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                {!! $error !!}
             </div>
             <div class="row">
                 <div class="col-xs-8">
