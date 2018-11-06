@@ -42,11 +42,15 @@ class MeController extends AdminController
 
         //修改前的值
         $origin = User::find($request->user()->id)->toArray();
+
+        if ($request->input('password')) {
+            $data = $request->except('_token', 'password_confirmation');
+            $data['password'] = bcrypt($data['password']);
+        } else {
+            $data = $request->except('_token', 'password', 'password_confirmation');
+        }
         // update
-        if (User::where('id', $request->user()->id)->update($request->input('password') ?
-            $request->except('_token', 'password_confirmation') :
-            $request->except('_token', 'password', 'password_confirmation')
-        )) {
+        if (User::where('id', $request->user()->id)->update($data)) {
             // setLog
             $this->setLog($request->user()->id, 'update', 'adminLogEvent.me.update', json_encode($origin), json_encode($request->except('_token', 'password_confirmation')));
             return butterflyAdminJump('success', getLang('Tips.updateSuccess'), '', 1);
