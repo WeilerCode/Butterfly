@@ -183,6 +183,8 @@ class PermissionsController extends AdminController
         }
         $thisGroup->permissions = $request->has('checked') ? implode(',', $request->input('checked')) : '1';
         if ($thisGroup->save()) {
+            // 清除分组缓存
+            Cache::forget(config('butterfly.cache_name.admin_group'));
             // setLog
             $this->setLog($request->user()->id, 'update', 'adminLogEvent.manage.permissions.permissions', json_encode($origin), json_encode($thisGroup->permissions));
             return butterflyAdminJump('success', getLang('Tips.updateSuccess'),'',1);
