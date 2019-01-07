@@ -3,6 +3,7 @@
 namespace Weiler\Butterfly\Http\Controllers\Admin\Manage;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Weiler\Butterfly\Http\Controllers\AdminController;
 use Weiler\Butterfly\Models\User;
 use Weiler\Butterfly\Models\UserAdminGroup;
@@ -50,6 +51,8 @@ class PermissionsController extends AdminController
             'permissions'   =>  '1,2,3,4'
         ];
         if (UserAdminGroup::create($data)) {
+            // 清除分组缓存
+            Cache::forget(config('butterfly.cache_name.admin_group'));
             // setLog
             $this->setLog($request->user()->id, 'create', 'adminLogEvent.manage.permissions.add', NULL, json_encode($data));
             return butterflyAdminJump('success', getLang('Tips.createSuccess'), route('admin-manage-permissions'), 1);
@@ -89,6 +92,8 @@ class PermissionsController extends AdminController
             'color'         =>  $request->input('color')
         ];
         if (UserAdminGroup::where('id', $id)->update($data)) {
+            // 清除分组缓存
+            Cache::forget(config('butterfly.cache_name.admin_group'));
             // setLog
             $this->setLog($request->user()->id, 'update', 'adminLogEvent.manage.permissions.edit', json_encode($origin), json_encode($data));
             return butterflyAdminJump('success', getLang('Tips.updateSuccess'), route('admin-manage-permissions-edit-group', ['id' => $id]), 1);
@@ -116,6 +121,8 @@ class PermissionsController extends AdminController
                 return butterflyAdminJump('error', getLang('Tips.illegal'), '', 1);
             if ($adminGroup->delete())
             {
+                // 清除分组缓存
+                Cache::forget(config('butterfly.cache_name.admin_group'));
                 //删除分组下的用户
                 User::where('type', 'system')->where('groupID',$id)->delete();
                 // setLog

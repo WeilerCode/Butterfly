@@ -31,7 +31,6 @@ class AdminAuth
      */
     public function handle($request, Closure $next)
     {
-        // TODO:后台用户权限
         if ($this->auth->guest()) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
@@ -61,7 +60,7 @@ class AdminAuth
     private function getAdminGroup()
     {
         $this->adminGroup = Cache::remember(config('butterfly.cache_name.admin_group'), 1440, function () {
-            return UserAdminGroup::all()->keyBy('id')->toArray();
+            return UserAdminGroup::all()->keyBy('id');
         });
     }
 
