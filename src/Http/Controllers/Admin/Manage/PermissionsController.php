@@ -78,7 +78,7 @@ class PermissionsController extends AdminController
             'lv'            =>  'required|integer',
             'name'          =>  'required|unique:butterfly_admin_group,name,'.$id
         ];
-        $rule['lv'] .= $request->user()->id !== 1 ? '|min:'.($request->user()->lv+1) : '|min:'.($request->user()->lv).'|size:1';
+        $rule['lv'] .= $request->user()->id !== 1 ? '|min:'.($request->user()->lv+1) : '|min:'.($request->user()->lv);
         // 表单验证
         $validator = $this->validator($request->input(), $rule);
         if ($validator)
