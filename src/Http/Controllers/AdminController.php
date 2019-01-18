@@ -4,13 +4,14 @@ namespace Weiler\Butterfly\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Weiler\Butterfly\Events\InitAdminController;
 use Weiler\Butterfly\Jobs\RecordLog;
 
 class AdminController extends Controller
 {
     public function __construct()
     {
-
+        event(new InitAdminController());
     }
 
     /**
