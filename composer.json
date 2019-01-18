@@ -11,7 +11,8 @@
     ],
     "require": {
         "weiler/easy-tree": "1.*",
-        "weiler/upload-img": "1.*"
+        "weiler/upload-img": "1.*",
+        "myclabs/php-enum": "^1.6"
     },
     "autoload": {
         "psr-4": {

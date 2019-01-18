@@ -8,6 +8,11 @@ use Weiler\Butterfly\Jobs\RecordLog;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+
+    }
+
     /**
      * 表单验证
      * @param $input
