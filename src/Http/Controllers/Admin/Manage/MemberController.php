@@ -111,14 +111,13 @@ class MemberController extends AdminController
             'realName'  =>  $request->input('realName') ? $request->input('realName') : '',
             'email'     =>  $request->input('email') ? $request->input('email') : '',
             'phone'     =>  $request->input('phone') ? $request->input('phone') : '',
-            'groupID'   =>  $request->input('groupID'),
-            'password'  =>  bcrypt($request->input('password'))
+            'groupID'   =>  $request->input('groupID')
         ];
         //修改前的值
         $origin = User::find($id)->toArray();
         // 判断是否修改password
         if ($request->input('password'))
-            $data['password'] = $request->input('password');
+            $data['password'] = bcrypt($request->input('password'));
         if (isset($group[$request->input('groupID')]) && User::where('id', $id)->update($data)) {
             // setLog
             $this->setLog($request->user()->id, 'update', 'adminLogEvent.manage.member.edit', json_encode($origin), json_encode($data));
