@@ -29,7 +29,7 @@
     <div class="login-box-body">
         <p class="login-box-msg">Butterfly 后台登录</p>
 
-        <form action="{{ action('\Weiler\Butterfly\Http\Controllers\Admin\Auth\AuthController@login') }}" method="post">
+        <form action="{{ route('admin-auth-login-post') }}" method="post">
             {{ csrf_field() }}
             <div class="form-group has-feedback @if($error = getValidationErrorForTemplate($errors, 'name')){{ 'has-error' }}@endif">
                 <input type="text" name="name" class="form-control" placeholder="用户名">

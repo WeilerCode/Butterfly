@@ -32,8 +32,8 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware('butterfly.admin.guest')->except('logout');
-        $this->redirectTo = action('\Weiler\Butterfly\Http\Controllers\Admin\IndexController@index');
-        $this->loginPath = action('\Weiler\Butterfly\Http\Controllers\Admin\Auth\AuthController@login');
+        $this->redirectTo = route('admin-index');
+        $this->loginPath = route('admin-auth-login');
     }
 
     /**

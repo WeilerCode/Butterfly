@@ -24,9 +24,9 @@ Route::group(['namespace' => 'Weiler\Butterfly\Http\Controllers', 'middleware' =
     {
         // Auth
         Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function () {
-            Route::get('login', 'AuthController@showLoginForm');
-            Route::post('login', 'AuthController@login');
-            Route::get('logout', 'AuthController@logout');
+            Route::get('login', 'AuthController@showLoginForm')->name('admin-auth-login');
+            Route::post('login', 'AuthController@login')->name('admin-auth-login-post');
+            Route::get('logout', 'AuthController@logout')->name('admin-auth-logout');
         });
         // Can
         Route::group(['middleware' => ['butterfly.admin.auth']], function()
